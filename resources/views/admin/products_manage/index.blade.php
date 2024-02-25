@@ -27,7 +27,7 @@
                     {{$product->name}}
                 </td>
                 <td>
-                    <img src="{{asset($product->image)}}">
+                    <img class="img-fluid" width="100px" src="/image/{{$product->image}}">
                 </td>
                 <td>
                     {{$product->material}}
@@ -62,7 +62,7 @@
     </table>
 
     <button class="btn btn-primary">
-        <a class="nav-link" href="#"> + Add a record </a>
+        <a class="nav-link" href="{{route('admin.addProduct')}}"> + Add a record </a>
     </button>
 
     <!--FOOTER-->

@@ -54,22 +54,8 @@ class ProductController extends Controller
             $sorting = $request->sorting;
         }
         $orderBy = "id";
-        $orderDirection = "asc";
-        switch ($sorting) {
-            case 'newest':
-                $orderDirection = "desc";
-                break;
-            case 'bestseller':
-                //bestseller de lai khi nao lam xong order tinh sau
-                break;
-            case 'low_to_high':
-                $orderBy = "price";
-                break;
-            case 'high_to_low':
-                $orderBy = "price";
-                $orderDirection = "desc";
-                break;
-        }
+        $orderDirection = "desc";
+
 
 //        cach 1 loi filter
 //        $products = Product::all()->filter(request('search'))->paginate(3);
@@ -103,6 +89,8 @@ class ProductController extends Controller
         ]);
     }
 
+
+
     public function show(int $id)
     {
         $product = DB::table('products')
@@ -116,6 +104,36 @@ class ProductController extends Controller
 
         return view('customers.clothes_magage.show', [
             'product' => $product
+        ]);
+    }
+
+    public function addProduct(){
+        $brands = Brand::all();
+        $data_brand['brands'] = $brands;
+
+        $categories = Category::all();
+        $data_category['categories'] = $categories;
+
+        return view('admin.products_manage.create',$data_brand,$data_category);
+    }
+
+    public function storeProduct(Product $products, Request $request){
+        $product = new Product;
+        $product->name = $request->name;
+        $product-> material = $request->material;
+        $product->size = $request->size;
+        $product->color = $request->color;
+        $product->description = $request->description;
+        $product->category_id = $request->category_id;
+        $product->brand_id = $request->brand_id;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
+        $product->image = $request->image;
+
+        $products->save();
+
+        return view('admin.products_manage.index',[
+        'products' => $products
         ]);
     }
 

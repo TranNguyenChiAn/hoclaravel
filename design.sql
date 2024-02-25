@@ -51,11 +51,17 @@ insert into categories(name) values
 
 DELETE FROM categories WHERE id = 5;
 
-create table producers(
+create table brands(
 	id INT auto_increment,
     name VARCHAR(100) NOT NULL,
     primary key(id)
 );
+
+ALTER TABLE
+    products
+CHANGE
+    producer_id
+    brand_id INT;
 
 insert into producers(name) values
 ('Vuong Vy'),
@@ -64,7 +70,7 @@ insert into producers(name) values
 ('Jikarma'),
 ('Nhu Y');
 
-create table clothes(
+create table products(
 	id INT auto_increment,
     name VARCHAR(255),
     material VARCHAR(255),
@@ -86,21 +92,22 @@ create table payment_method (
     name VARCHAR(50) NOT NULL
 );
 
-drop table order_details;
-drop table orders;
-drop table order_details;
 
-select * from clothes;
 SET SQL_SAFE_UPDATES = 0;
-DROP TABLE clothes;
 
-insert into clothes(name, material, size, color, description, category_id, producer_id, image, quantity, price) values
+
+insert into products(name, material, size, color, description, brand_id, producer_id, image, quantity, price) values
 ('Áo phông tay lỡ', 'Cotton', 'S, M, L', 'White, Black, Pink', 'Thiết kế áo thun unisex oversize rộng rãi, thoáng mát.', 1, 1, 'abc', 1000, 17.8 ),
 ('Quần hộp Unisex', 'Kaki', 'S, M, L', 'White, Black, Green', 'Thiết kế unisex oversize rộng rãi, thoáng mát.', 3 , 2, 'abc', 1000, 16.9 ),
 ('Áo sweater thỏ rùa', 'Len', 'S, M, L', 'White, Black, Green, BabyPink, Grey', 'Thiết kế unisex oversize rộng rãi, ấm áp.', 2, 3, 'abc', 2000, 20.35 ),
 ('Áo khoác Unisex', 'Lông cừu, Chất gió xuất dư', 'M, L, XL', 'White, Black, Grey', 'Thiết kế unisex oversize rộng rãi, ấm áp.', 4, 4, 'abc', 900, 25 ),
 ('Kính Gentle Monster', 'Thép', 'None', 'Black, Grey', ' JENNIE - 1996 01 từ bộ sưu tập J Bentley Home có gọng hình chữ nhật màu đen thổ toán diêm. Gọng kính mắt mèo này bao gồm tròng kính đen, nổi bật bởi những gọng được trang trí bằng vòng kim loại vàng đặc trưng.', 5, 5, 'abc', 30, 100 );
 
+ALTER TABLE
+    products
+CHANGE
+    producer_id
+    brand_id INT;
 
 create table orders(
 	id INT auto_increment,
@@ -119,13 +126,11 @@ alter table orders add foreign key (customer_id) references customers(id) on del
 alter table orders add foreign key (admin_id) references admins(id) on delete cascade;
 alter table orders add foreign key (payment_method) references payment_method(id) on delete cascade;
 
-ALTER TABLE orders
-DROP admin_id;
+insert into orders(date_buy, customer_id, admin_id, status, payment_method) values ('03-09-2024', 2, 1, 1, 1);
 
-ALTER TABLE orders
-DROP foreign key admin_id;
+update orders set date_buy = '2024-02-01' where id = 4;
 
-select * From orders;
+select * from orders;
 
 create table order_details(
 	clothes_id INT,
@@ -136,14 +141,14 @@ create table order_details(
 );
 alter table order_details add foreign key (clothes_id) references clothes(id) on delete cascade;
 alter table order_details add foreign key (order_id) references orders(id) on delete cascade;
-
-
-
+select * from status;
+    
 use design;
 SELECT * FROM order_details ORDER BY order_id;
-SELECT * FROM orders;
-delete from orders;
-delete from order_details;
+SELECT * FROM customers;
+
+insert into payment_method(name) values ('cash'), ('online');
+
 SET SQL_SAFE_UPDATES = 0;
 
 SELECT order_details.order_id,
@@ -151,15 +156,15 @@ SELECT order_details.order_id,
 		order_details.price, order_details.quantity,
         (order_details.price * order_details.quantity) AS total
 FROM order_details
-INNER JOIN clothes ON clothes.id = order_details.clothes_id
+INNER JOIN products ON products.id = order_details.products_id
 INNER JOIN orders  ON orders.id = order_details.order_id;
 
 use design;
 
 select * from customers;
 select * from admins;
-select * from clothes;
-select * from producers;
+select * from products;
+select * from brands;
 select * from categories;
 select * from orders;
 select * from order_details;
@@ -193,13 +198,3 @@ WHERE MONTH(orders.date_buy) = 9
 GROUP BY order_details.clothes_id
 ORDER BY SUM(order_details.quantity) DESC;
 
-SELECT id, date_buy, count(id) as quantity_order
-FROM orders
-WHERE orders.date_buy = '2023-09-04'
-group by orders.id;	
-        
-UPDATE orders SET date_buy = '2023-05-02' WHERE date_buy = '2023-09-02';
-select * from orders where month(date_buy) = 5;
-
-UPDATE customers SET name = 'Chi An' WHERE id = 14;
-delete from admins where id = 2;

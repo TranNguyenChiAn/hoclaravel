@@ -55,7 +55,7 @@
             </li>
             <li class="choice">
                 <img style="width:16px; margin-top: -3px" src="../../image/statistic.png">
-                <a class="link_in_menu" href="../homepage/index.php"> Statistics </a>
+                <a class="link_in_menu" href="../homepage/index.blade.php"> Statistics </a>
             </li>
             <li  class="choice">
                 <img style="width:16px; margin-top: -3px" src="../../image/package.png">

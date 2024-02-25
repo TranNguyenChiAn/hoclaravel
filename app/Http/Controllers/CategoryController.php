@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 
@@ -18,9 +19,12 @@ class CategoryController extends Controller
     //trang index
     public function show()
     {
-        $categories = Category::all();
-        return view("admin.category_manager.index", [
-            "categories" => $categories
+        $categories = DB::table('categories')
+            ->select('*')
+            ->get();
+
+        return view('admin.category_manager.index', [
+            'categories' => $categories
         ]);
     }
 

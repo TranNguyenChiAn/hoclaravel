@@ -1,97 +1,5 @@
-<?php
-    //Cho phép làm việc với session
-    session_start();
-    //Kiểm tra tồn tại số đth trên session hay chưa, nếu đã tồn tại thì cho nhảy sang trang khác
-    if(isset($_SESSION['email_admin'])){
-        //Sang trang danh sách lớp
-        header("Location:../homepage/index.blade.php");
-}
-?>
-<!doctype html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> Login Admin </title>
-    <style>
-        body {
-            background-image: url("../../image/banner.png");
-            background-repeat:no-repeat;
-            background-size: cover;
-        }
+@vite(["resources/sass/app.scss", "resources/js/app.js"])
 
-        .form_login {
-            background-color: transparent;
-            box-shadow: 0 18px 200px -60px black;
-            border-radius: 30px;
-            width: 500px;
-            margin: 100px 100px 0 380px;
-            border: none;
-            padding: 10px;
-            backdrop-filter: blur(20px);
-            font-size: 20px;
-        }
-
-
-        #email_admin {
-            border: none;
-            border-bottom: 1px solid #cbc9c9;
-            width: 300px;
-            height: 40px;
-            border-radius: 6px;
-            padding-left: 9px;
-        }
-
-        #password_admin {
-            border: none;
-            border-bottom: 1px solid #cbc9c9;
-            width: 300px;
-            height: 40px;
-            border-radius: 6px;
-            padding-left: 9px;
-        }
-
-        #login_button {
-            width: 62%;
-            height: 33px;
-            border-radius: 6px;
-            border:none;
-            background-color: #2060be;
-            font-weight: bold;
-            color: white;
-            display: block;
-            margin-left: 94px;
-            font-size: 14px;
-        }
-
-        #login_button:hover {
-            cursor: pointer;
-        }
-        #showEye {
-            position: absolute;
-            margin: 11px 0 0 -40px;
-            width: 20px;
-        }
-        #showEye:hover {
-            cursor: pointer;
-        }
-
-        #hideEye {
-            display: none;
-            position: absolute;
-            margin: 11px 0 0 -40px;
-            width: 20px;
-        }
-        #hideEye:hover {
-            cursor: pointer;
-        }
-
-    </style>
-</head>
-<body>
 <div class="form_login" >
     <figure align="center" style="font-weight: bold; font-size: 30px;color: rgba(239,239,243,0.91);"> ADMIN LOGIN </figure>
     <form align="center" id="form" method="post" action="loginProcess.php">
@@ -135,6 +43,5 @@
         password.focus();
     }
 </script>
-</body>
-</html>
+
 

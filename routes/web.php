@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\AdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,19 +15,15 @@ use App\Http\Controllers\OrderController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/admin', [AdminController::class, 'show']) -> name('admin');
 
-Route::get('/lienhe', function () {
-    return view('lienhe');
-});
-
-
-Route::get('/', [ProductController::class, 'view']) -> name('product.index');
-
-
-Route::get('/cart', [ProductController::class, 'cart']);
-Route::post('/cart/update', [ProductController::class, 'updateCart']);
-
+Route::get('/', [OrderController::class, 'index']) -> name('admin.order');
 
 Route::get('/order_manage', [OrderController::class, 'index']) -> name('admin.order');
+
 Route::get('/category_manage', [CategoryController::class, 'show']) -> name('admin.category');
+
 Route::get('/products_manage', [ProductController::class, 'index']) -> name('admin.product');
+
+Route::get('/addProduct', [ProductController::class, 'addProduct'],[CategoryController::class,'show']) -> name('admin.addProduct');
+Route::post('/storeProduct', [ProductController::class, 'storeProduct']) -> name('admin.storeProduct');
