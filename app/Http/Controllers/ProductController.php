@@ -18,77 +18,26 @@ class ProductController extends Controller
     //show all products
     public function index(Request $request)
     {
-        //search
-        $search = "";
-        if (isset($request->search)) {
-            $search = $request->search;
-        }
-        //filter
-        $price_1 = 0;
-        $price_2 = 9999;
-        if ($request->price_1 != null) {
-            $price_1 = $request->price_1;
-        }
-        if ($request->price_2 != null) {
-            $price_2 = $request->price_2;
-        }
-        if ($price_1 > $price_2) {
-            $bigger = $price_1;
-            $price_1 = $price_2;
-            $price_2 = $bigger;
-        }
-
-        $brand = Brand::all('id')->toArray();
-        if (isset($request->brand)) {
-            $brand = $request->brand;
-        }
-
-        $category = Category::all('id')->toArray();
-        if (isset($request->category)) {
-            $category = $request->category;
-        }
-
-        //sorting
-        $sorting = 'default';
-        if (isset($request->sorting)) {
-            $sorting = $request->sorting;
-        }
         $orderBy = "id";
         $orderDirection = "desc";
-
-
-//        cach 1 loi filter
-//        $products = Product::all()->filter(request('search'))->paginate(3);
-        $products = DB::table('products')
-            ->join('categories', 'products.category_id','=', 'categories.id')
-            ->join('brands', 'products.brand_id', '=','brands.id')
-            ->select('products.*', 'categories.name AS category_name', 'brands.name AS brand_name')
-            ->whereBetween('price', [$price_1, $price_2])
-            ->whereIn('brand_id', $brand)
-            ->whereIn('category_id', $category)
-            ->where('products.name', 'like', '%' . $search . '%')
-            ->orderBy($orderBy, $orderDirection)
-            ->paginate(6)
-            ->withQueryString();
-//        cach 3 khong join duoc
-//        $products = Product::paginate(6);
 
         $categories = Category::all();
         $brands = Brand::all();
 
+
+        $products = DB::table('products')
+            ->join('categories', 'products.category_id','=', 'categories.id')
+            ->join('brands', 'products.brand_id', '=','brands.id')
+            ->select('products.*', 'categories.name AS category_name', 'brands.name AS brand_name')
+            ->orderBy($orderBy, $orderDirection)
+            ->paginate(5);
+
         return view('admin.products_manage.index', [
             'products' => $products,
             'brands' => $brands,
-            'categories' => $categories,
-            'search' => $search,
-            'sorting' => $sorting,
-            'f_price_1' => $price_1,
-            'f_price_2' => $price_2,
-            'f_brand' => $brand,
-            'f_category' => $category,
-        ]);
+            'categories' => $categories
+            ]);
     }
-
 
 
     public function show(int $id)

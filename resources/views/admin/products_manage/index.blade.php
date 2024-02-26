@@ -1,22 +1,22 @@
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
 @include('admin/layout/nav')
 
-<section style="width:80%; margin-left: 210px">
+<section style="width:80%; margin-left: 224px">
     <!-- LIST -->
     <h2> MANAGE CLOTHES </h2>
-    <table class="table table-striped">
+    <table class="table table-hover">
         <tr>
-            <th class="t-heading" align="left"> ID </th>
-            <th class="t-heading" align="left"> Name </th>
-            <th class="t-heading" align="left"> Image </th>
-            <th class="t-heading" align="center"> Material </th>
-            <th class="t-heading" align="left"> Color </th>
-            <th class="t-heading" align="left" width="118px"> Category Name </th>
-            <th class="t-heading" align="left" width="118px"> Brand Name </th>
-            <th class="t-heading" align="left"> Quantity </th>
-            <th class="t-heading" align="left"> Price </th>
-            <th class="t-heading" align="center"> Edit </th>
-            <th class="t-heading" align="center"> Delete </th>
+            <th> ID </th>
+            <th> Name </th>
+            <th> Image </th>
+            <th> Material </th>
+            <th> Color </th>
+            <th> Category Name </th>
+            <th> Brand Name </th>
+            <th> Quantity </th>
+            <th> Price </th>
+            <th> Edit </th>
+            <th> Delete </th>
         </tr>
         @foreach($products as $product)
             <tr class="record">
@@ -27,7 +27,7 @@
                     {{$product->name}}
                 </td>
                 <td>
-                    <img class="img-fluid" width="100px" src="/image/{{$product->image}}">
+                    <img class="img-fluid" width="88px" src="/image/{{$product->image}}">
                 </td>
                 <td>
                     {{$product->material}}
@@ -35,7 +35,7 @@
                 <td>
                     {{$product->color}}
                 </td>
-                <td  width="70px" align="center">
+                <td>
                     {{$product->category_name}}
                 </td>
                 <td>
@@ -47,23 +47,28 @@
                 <td>
                     {{$product->price}}
                 </td>
-                <td  width="90px">
+                <td>
                     <a href="#">
                         <i class="bi bi-magic"></i>
                     </a>
                 </td>
-                <td  width="90px">
+                <td>
                     <a href="#">
-                        <i class="bi bi-x"></i>
+                        <i class="bi bi-x link-danger"></i>
                     </a>
                 </td>
             </tr>
         @endforeach
     </table>
 
+        {{ $products -> links() }}
+
+
+
     <button class="btn btn-primary">
         <a class="nav-link" href="{{route('admin.addProduct')}}"> + Add a record </a>
     </button>
+
 
     <!--FOOTER-->
 </section>

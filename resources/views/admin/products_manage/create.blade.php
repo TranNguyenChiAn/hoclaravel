@@ -63,7 +63,7 @@
                 <img src="" alt="" id="image" width="100px" >
             </div>
             <div class="col-md-8">
-                <button class="btn add btn-primary" type="submit"> Add </button>
+                <button class="btn btn-primary" type="submit"> Add </button>
             </div>
         </form>
     </div>

@@ -22,6 +22,9 @@ Route::get('/', [OrderController::class, 'index']) -> name('admin.order');
 Route::get('/order_manage', [OrderController::class, 'index']) -> name('admin.order');
 
 Route::get('/category_manage', [CategoryController::class, 'show']) -> name('admin.category');
+Route::get('/addCategory', [CategoryController::class, 'addCategory']) -> name('admin.addCategory');
+Route::post('/storeCategory', [CategoryController::class, 'storeCategory']) -> name('admin.storeCategory');
+Route::get('/{category}', [CategoryController::class, 'destroy']) -> name('admin.deleteCategory');
 
 Route::get('/products_manage', [ProductController::class, 'index']) -> name('admin.product');
 

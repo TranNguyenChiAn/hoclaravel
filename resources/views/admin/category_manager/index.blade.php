@@ -5,27 +5,36 @@
     <h2> MANAGE CATEGORY </h2>
     <table class="table table-striped">
         <tr>
-            <th class="t-heading" align="left"> ID </th>
-            <th class="t-heading" align="left"> Name </th>
-            <th class="t-heading" width="100px"> Action </th>
+            <th class="col-2"> ID </th>
+            <th class="col-8"> Name </th>
+            <th> Edit </th>
+            <th> Remove </th>
         </tr>
 
         @foreach($categories as $category)
-            <tr class="record">
-                <td class="record">
+            <tr>
+                <td>
                     {{$category->id}}
                 </td>
                 <td>
                     {{$category->name}}
                 </td>
-                <td style="display: flex; justify-content: space-around">
+                <td>
                     <a href="#">
                         <i class="bi bi-magic"></i>
-                    </a><br>
-                    <a href="#">
-                        <i class="bi bi-x"></i>
-                    </a><br>
+                    </a>
+                </td>
+                <td>
+                    <form method="post" action="{{ route('admin.deleteCategory', $category) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button> Remove </button>
+                    </form>
                 </td>
             </tr>
         @endforeach
+    </table>
+    <button class="btn btn-primary" type="submit">
+        <a class="nav-link" href="{{route('admin.addCategory')}}"> Add category </a>
+    </button>
 </section>
