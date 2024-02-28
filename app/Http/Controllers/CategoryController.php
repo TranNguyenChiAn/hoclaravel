@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Requests\StoreCategoryRequest;
 use App\Requests\StoreCustomerRequest;
 use App\Requests\UpdateCustomerRequest;
 use Illuminate\Http\Request;
@@ -14,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 
 class CategoryController extends Controller
@@ -36,26 +39,21 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function create()
-    {
-        return view('admin.customer_manager.create');
-    }
-
     public function addCategory()
     {
-        return view('admin.category_manager.create');
-    }
-
-    public function storeCategory(Category $categories, Request $request)
-    {
-        $category = new Category();
-        $category->name = $request->name;
-
-        $categories->save();
-
-        return view('admin.category_manager.index', [
+        $categories = Category::all();
+        return view('admin.category_manager.create', [
             'categories' => $categories
         ]);
+    }
+
+    public function storeCategory(Request  $request)
+    {
+            $array = [];
+            $array = Arr::add($array, 'name', $request->name);
+            //Lấy dữ liệu từ form và lưu lên db
+            Category::create($array);
+            return Redirect::route('admin.category');
     }
 
     public function editCategory(Category $categories, Request $request)
@@ -84,20 +82,10 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy(Category $category, Product $product, Request $request)
+    public function destroy(Category $category)
     {
-        $products = DB::table('products')
-            ->select('id')
-            ->get();
-
-        if ($category->id != $products->id) {
-            $category->delete();
-            return Redirect::route('admin.category')->with('success', 'Delete a category successfully!');
-        }
-        else {
-            return Redirect::route('admin.category')->with('success', 'Can not delete category. Because it relate with products!');
-        }
-
+        $category->delete();
+        return Redirect::route('admin.category')->with('success', 'Delete a category successfully!');
 
     }
 
