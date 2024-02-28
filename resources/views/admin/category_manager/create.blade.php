@@ -10,7 +10,7 @@
             <input type="hidden" name="id">
             <div class="col-md-6">
                 <label class="form-label">Name</label>
-                <input type="text" class="form-control" name="category_name" placeholder="Category name">
+                <input type="text" class="form-control" name="name" placeholder="Category name">
             </div>
             <br>
             <div class="col-md-6">

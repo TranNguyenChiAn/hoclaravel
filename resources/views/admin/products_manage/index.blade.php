@@ -60,10 +60,9 @@
             </tr>
         @endforeach
     </table>
-
-        {{ $products -> links() }}
-
-
+    <div>
+        {{ $products->links() }}
+    </div>
 
     <button class="btn btn-primary">
         <a class="nav-link" href="{{route('admin.addProduct')}}"> + Add a record </a>

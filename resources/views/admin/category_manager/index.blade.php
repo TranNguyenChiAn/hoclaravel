@@ -20,15 +20,15 @@
                     {{$category->name}}
                 </td>
                 <td>
-                    <a href="#">
+                    <a href="{{route('admin.editCategory', $category)}}">
                         <i class="bi bi-magic"></i>
                     </a>
                 </td>
                 <td>
-                    <form method="post" action="{{ route('admin.deleteCategory', $category) }}">
+                    <form method="post" action="{{ route('admin.destroyCategory', $category) }}">
                         @csrf
                         @method('DELETE')
-                        <button> Remove </button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </td>
             </tr>

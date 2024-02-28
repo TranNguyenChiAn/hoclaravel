@@ -27,9 +27,6 @@ class OrderController extends Controller
             $customer = $request->customer;
         }
 
-
-//        cach 1 loi filter
-//        $products = Product::all()->filter(request('search'))->paginate(3);
         $orders = DB::table('orders')
             ->join('customers', 'orders.customer_id', '=', 'customers.id')
             ->select('orders.*', 'customers.name AS customer_name')
@@ -37,8 +34,7 @@ class OrderController extends Controller
             ->where('customers.name', 'like', '%' . $search . '%')
             ->paginate(6)
             ->withQueryString();
-//        cach 3 khong join duoc
-//        $products = Product::paginate(6);
+
 
         $customers = Customer::all();
 

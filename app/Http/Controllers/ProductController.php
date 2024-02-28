@@ -16,7 +16,7 @@ use function PHPUnit\Framework\isNull;
 class ProductController extends Controller
 {
     //show all products
-    public function index(Request $request)
+    public function index()
     {
         $orderBy = "id";
         $orderDirection = "desc";
@@ -51,7 +51,7 @@ class ProductController extends Controller
 
         $product = Product::where('id', $id)->first();
 
-        return view('customers.clothes_magage.show', [
+        return view('customers.clothes_manage.show', [
             'product' => $product
         ]);
     }

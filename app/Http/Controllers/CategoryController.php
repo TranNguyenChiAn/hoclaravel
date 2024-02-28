@@ -21,11 +21,16 @@ class CategoryController extends Controller
     //trang index
     public function show()
     {
-        $categories = DB::table('categories')
-            ->select('*')
-            ->orderBy('id', 'asc')
-            ->get();
+//        $categories = DB::table('categories')
+//            ->select('*')
+//            ->orderBy('id', 'asc')
+//            ->get();
 
+
+        //Lấy dữ liệu từ bảng
+        $categories = Category::get()->sortBy('id')->all();
+
+        //Trả lại view
         return view('admin.category_manager.index', [
             'categories' => $categories
         ]);
@@ -36,27 +41,8 @@ class CategoryController extends Controller
         return view('admin.customer_manager.create');
     }
 
-    public function store(StoreCustomerRequest $request)
-    {
-        if ($request->validated()) {
-            $array = [];
-            $array = Arr::add($array, 'first_name', $request->first_name);
-            $array = Arr::add($array, 'last_name', $request->last_name);
-            $array = Arr::add($array, 'email', $request->email);
-            $array = Arr::add($array, 'password', Hash::make($request->password));
-            $array = Arr::add($array, 'phone_number', $request->phone_number);
-            $array = Arr::add($array, 'address', $request->address);
-            $array = Arr::add($array, 'status', $request->status);
-            //Lấy dữ liệu từ form và lưu lên db
-            Customer::create($array);
-
-            return Redirect::route('admin/customer')->with('success', 'Add a customer successfully!');
-        }
-    }
-
     public function addCategory()
     {
-
         return view('admin.category_manager.create');
     }
 
@@ -72,10 +58,47 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function destroy(Category $category)
+    public function editCategory(Category $categories, Request $request)
     {
-        $category->delete();
-        return Redirect::route('admin.category')->with('success', 'Delete a category successfully!');
+        return view('admin.category_manager.edit', [
+            'categories' => $categories
+        ]);
+    }
+
+    public function updateCategory(Category $categories, Request $request)
+    {
+        $category = new Category();
+        $category->name = $request->name;
+
+        $categories->save();
+
+        return view('admin.category_manager.index', [
+            'categories' => $categories
+        ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Category $category
+     * @return \Illuminate\Http\Response
+     */
+
+    public function destroy(Category $category, Product $product, Request $request)
+    {
+        $products = DB::table('products')
+            ->select('id')
+            ->get();
+
+        if ($category->id != $products->id) {
+            $category->delete();
+            return Redirect::route('admin.category')->with('success', 'Delete a category successfully!');
+        }
+        else {
+            return Redirect::route('admin.category')->with('success', 'Can not delete category. Because it relate with products!');
+        }
+
+
     }
 
 }
