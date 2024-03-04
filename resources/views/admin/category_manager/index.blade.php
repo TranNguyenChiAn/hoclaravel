@@ -2,7 +2,7 @@
 @include('admin/layout/nav')
 
 <section style="width:80%; margin-left: 210px">
-    <h2> MANAGE CATEGORY </h2>
+    <figure align="center" style="font-weight: bold; font-size: 30px;color: #2F2FFE;"> MANAGE CATEGORY </figure>
     <table class="table table-striped">
         <tr>
             <th class="col-2"> ID </th>

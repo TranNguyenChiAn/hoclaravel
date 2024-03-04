@@ -3,7 +3,8 @@
 
 <section style="width:80%; margin-left: 224px">
     <!-- LIST -->
-    <h2> MANAGE CLOTHES </h2>
+    <figure align="center" style="font-weight: bold; font-size: 30px;color: #2f2ffe;"> MANAGE CLOTHES </figure>
+
     <table class="table table-hover">
         <tr>
             <th> ID </th>
@@ -48,24 +49,28 @@
                     {{$product->price}}
                 </td>
                 <td>
-                    <a href="{{ route('admin.editProduct', $product) }}">
+                    <a href="{{ route('product.edit', $product) }}">
                         <i class="bi bi-magic"></i>
                     </a>
                 </td>
                 <td>
-                    <a href="{{route('admin.deleteProduct', $product) }}">
-                        <i class="bi bi-x link-danger"></i>
-                    </a>
+                    <form method="post" action="{{ route('product.delete', $product) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
                 </td>
             </tr>
         @endforeach
     </table>
-    <div>
-        {{ $products->links() }}
+
+    <div class="d-flex justify-content-center">
+        {!! $products->links() !!}
+        <br>
     </div>
 
-    <button class="btn btn-primary">
-        <a class="nav-link" href="{{route('admin.addProduct')}}"> + Add a record </a>
+    <button class="btn btn-primary end-0">
+        <a class="nav-link" href="{{route('product.create')}}"> + Add a record </a>
     </button>
 
 

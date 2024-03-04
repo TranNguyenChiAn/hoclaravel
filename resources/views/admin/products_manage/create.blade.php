@@ -3,8 +3,8 @@
 
 <section style="width:80%; margin-left: 240px">
     <div class="row g-3">
-        <figure align="center" style="font-weight: bold; font-size: 30px;color: #4d4b4b;"> Add a category </figure>
-        <form class="row g-3 bg-white" method="POST" action="{{route('admin.storeProduct')}}">
+        <figure align="center" style="font-weight: bold; font-size: 30px;color: #4d4b4b;"> Add a product </figure>
+        <form class="row g-3 bg-white" method="POST" action="{{route('product.store')}}">
             @method('POST')
             @csrf
             <input type="hidden" name="id">
@@ -69,15 +69,3 @@
     </div>
 </section>
 
-<script>
-    function chooseFile(fileInput) {
-        if (fileInput.files && fileInput.files[0]) {
-            let reader = new FileReader();
-
-            reader.onload = function(e) {
-                $('#image').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(fileInput.files[0]);
-        }
-    }
-</script>

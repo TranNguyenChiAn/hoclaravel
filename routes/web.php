@@ -36,12 +36,12 @@ Route::delete('/{category}', [CategoryController::class, 'destroy']) -> name('ad
 
 
 //PRODUCT
-Route::get('/products_manage', [ProductController::class,'index']) -> name('admin.product');
-Route::get('/addProduct', [ProductController::class, 'addProduct']) -> name('admin.addProduct');
-Route::post('/storeProduct', [ProductController::class, 'storeProduct']) -> name('admin.storeProduct');
-Route::get('/{product}/edit', [ProductController::class,'edit'])->name('admin.editProduct');
-Route::put('/{product}/edit', [ProductController::class,'update'])->name('admin.updateProduct');
-Route::delete('/{product}', [CategoryController::class, 'delete']) -> name('admin.deleteProduct');
+Route::get('/product', [ProductController::class,'index']) -> name('product');
+Route::get('/addProduct', [ProductController::class, 'addProduct']) -> name('product.create');
+Route::post('/storeProduct', [ProductController::class, 'storeProduct']) -> name('product.store');
+Route::get('/{product}/edit', [ProductController::class,'edit'])->name('product.edit');
+Route::put('/{product}/edit', [ProductController::class,'update'])->name('product.update');
+Route::delete('/{product}', [CategoryController::class, 'delete']) -> name('product.delete');
 
 
 

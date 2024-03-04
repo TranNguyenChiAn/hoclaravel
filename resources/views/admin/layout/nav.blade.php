@@ -2,7 +2,7 @@
     <style>
         body {
             margin:0;
-            color: #6868de;
+            color: #2F2FFE;
         }
         .navbar {
             position: fixed;
@@ -15,7 +15,7 @@
             padding-left: 0;
             list-style-type: none;
             background-color: #FFFFFF;
-            color: #6868de;
+            color: #2F2FFE;
             display: flex;
             justify-content: space-around;
             flex-direction: column;
@@ -27,7 +27,7 @@
         .choice{
             width: 200px;
             height: 50px;
-            color: #6868de;
+            color: #2F2FFE;
             text-decoration: none;
             padding-left: 24%;
             padding-top: 10px;
@@ -42,7 +42,7 @@
 
         .link_in_menu {
             text-decoration: none;
-            color: #6868de;
+            color: #2F2FFE;
             font-weight: bold;
         }
     </style>

@@ -26,7 +26,7 @@ class ProductController extends Controller
 
         $products = Product::with('brand')
         ->with('category')
-        ->paginate(6);
+        ->simplePaginate(5);
 
         return view('admin.products_manage.index', [
             'products' => $products,
@@ -70,12 +70,8 @@ class ProductController extends Controller
 
     public function edit(Product $product, Request $request)
     {
-        //Lấy brand, category
-        $brands = Brand::all();
-        $categories = Category::all();
-
         //Gọi đến view để sửa
-        return view('admin.products.index', [
+        return view('admin.products_manage.edit', [
             'product' => $product
         ]);
 
@@ -98,14 +94,14 @@ class ProductController extends Controller
 
         $product->update($array);
         //Quay về danh sách
-        return Redirect::route('admin.product');
+        return Redirect::route('product');
     }
 
     public function delete( Product $product, Request $request ){
         //Xóa bản ghi được chọn
         $product->delete();
         //Quay về danh sách
-        return Redirect::route('products.index');
+        return Redirect::route('product');
     }
 
 }
