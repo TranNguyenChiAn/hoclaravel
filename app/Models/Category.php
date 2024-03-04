@@ -12,11 +12,8 @@ class Category extends Model
     protected $fillable = ['name'];
     protected $table = 'categories';
 
-    public function scopeFilter($query, array $filters)
-    {
-        if ($filters['search'] ?? false) {
-            $query->where('name', 'like', '%' . request('search') . '%');
-        }
+    public function product(){
+        return $this->hasMany(Product::class);
     }
 
 }

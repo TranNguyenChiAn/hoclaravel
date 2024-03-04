@@ -2,21 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreProductRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
-use App\Requests\StoreCategoryRequest;
-use App\Requests\StoreCustomerRequest;
-use App\Requests\UpdateCustomerRequest;
+use App\Requests\UpdateCategoryRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Storage;
 
 
 class CategoryController extends Controller
@@ -24,12 +19,6 @@ class CategoryController extends Controller
     //trang index
     public function show()
     {
-//        $categories = DB::table('categories')
-//            ->select('*')
-//            ->orderBy('id', 'asc')
-//            ->get();
-
-
         //Lấy dữ liệu từ bảng
         $categories = Category::get()->sortBy('id')->all();
 
@@ -56,23 +45,22 @@ class CategoryController extends Controller
             return Redirect::route('admin.category');
     }
 
-    public function editCategory(Category $categories, Request $request)
+    public function editCategory(Category $category, Request $request)
     {
+        //Gọi đến view để sửa
         return view('admin.category_manager.edit', [
-            'categories' => $categories
+            'category' => $category
         ]);
     }
 
-    public function updateCategory(Category $categories, Request $request)
+    public function updateCategory(UpdateCategoryRequest $request, Category $category)
     {
-        $category = new Category();
-        $category->name = $request->name;
+        $array = [];
+        $array = Arr::add($array, 'name', $request->name);
 
-        $categories->save();
+        $category->update($array);
 
-        return view('admin.category_manager.index', [
-            'categories' => $categories
-        ]);
+        return Redirect::route('admin.category');
     }
 
     /**

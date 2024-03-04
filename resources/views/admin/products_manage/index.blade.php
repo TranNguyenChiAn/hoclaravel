@@ -36,10 +36,10 @@
                     {{$product->color}}
                 </td>
                 <td>
-                    {{$product->category_name}}
+                    {{$product->category->name}}
                 </td>
                 <td>
-                    {{$product->brand_name}}
+                    {{$product->brand->name}}
                 </td>
                 <td>
                     {{$product->quantity}}
@@ -48,12 +48,12 @@
                     {{$product->price}}
                 </td>
                 <td>
-                    <a href="#">
+                    <a href="{{ route('admin.editProduct', $product) }}">
                         <i class="bi bi-magic"></i>
                     </a>
                 </td>
                 <td>
-                    <a href="#">
+                    <a href="{{route('admin.deleteProduct', $product) }}">
                         <i class="bi bi-x link-danger"></i>
                     </a>
                 </td>

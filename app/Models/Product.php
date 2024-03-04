@@ -9,8 +9,9 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['product_name', 'quantity', 'price', 'description', 'image', 'category_id', 'brand_id'];
     protected $table = 'products';
+    protected $fillable = ['product_name', 'quantity', 'price', 'description', 'image', 'category_id', 'brand_id'];
+
     public function scopeFilter($query, array $filters)
     {
         if ($filters['search'] ?? false) {
@@ -21,11 +22,11 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo('App\Category');
+        return $this->belongsTo(Category::class);
     }
 
     public function brand()
     {
-        return $this->belongsTo('App\Brand');
+        return $this->belongsTo(Brand::class);
     }
 }

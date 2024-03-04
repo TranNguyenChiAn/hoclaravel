@@ -12,11 +12,8 @@ class Brand extends Model
     protected $fillable = ['name'];
     protected $table = 'brands';
 
-    public function scopeFilter($query, array $filters)
-    {
-        if ($filters['search'] ?? false) {
-            $query->where('brand_name', 'like', '%' . request('search') . '%');
-        }
+    public function product(){
+        return $this->hasMany(Product::class);
     }
 
 }
