@@ -3,17 +3,19 @@
 
 <section style="width:80%; margin-left: 224px">
     <!-- LIST -->
-    <figure align="center" style="font-weight: bold; font-size: 30px;color: #2f2ffe;"> MANAGE CLOTHES </figure>
+    <h1 align="center" style="color: #2f2ffe;">
+        MANAGE PRODUCTS
+    </h1>
 
     <table class="table table-hover">
         <tr>
             <th> ID </th>
             <th> Name </th>
             <th> Image </th>
-            <th> Material </th>
-            <th> Color </th>
+            <th> Size</th>
+            <th> Pieces </th>
             <th> Category Name </th>
-            <th> Brand Name </th>
+            <th> Age Range </th>
             <th> Quantity </th>
             <th> Price </th>
             <th> Edit </th>
@@ -28,19 +30,20 @@
                     {{$product->name}}
                 </td>
                 <td>
-                    <img class="img-fluid" width="88px" src="/image/{{$product->image}}">
+                    <img class="img-fluid" width="88px"
+                         src="{{ asset('./images/' . $product->image)}}">
                 </td>
                 <td>
-                    {{$product->material}}
+                    {{$product->size}}
                 </td>
                 <td>
-                    {{$product->color}}
+                    {{$product->pieces}}
                 </td>
                 <td>
                     {{$product->category->name}}
                 </td>
                 <td>
-                    {{$product->brand->name}}
+                    {{$product->age->name}}+
                 </td>
                 <td>
                     {{$product->quantity}}

@@ -1,5 +1,5 @@
-create database design;
-use design;
+create database lego_store;
+use lego_store;
 
 
 create table admins(
@@ -36,85 +36,65 @@ insert into customers(name, email, password, phone, gender, address) values
 ('Le Tien', 'tranletien@gmail.com', 'datpasskieugiday', '01679460283', 1, 'HN'),
 ('Tong Tran', 'tongtrankhonkho@gmail.com', 'conanancut', '0868888666', 1, 'HN');
 
+select * from customers;
+
 create table categories(
-	id INT auto_increment,
-    name VARCHAR(100) NOT NULL unique,
-    primary key(id)
+	id INT auto_increment primary key,
+    name VARCHAR(100) NOT NULL unique
 );
 
 insert into categories(name) values
-('Shirts'),
-('Pants'),
-('Bags'),
-('Coats'),
-('Shoes');
+('Animal'),
+('Architecture'),
+('City'),
+('Creator Expert'),
+('Star War');
 
-DELETE FROM categories WHERE id = 5;
-
-create table brands(
+create table ages(
 	id INT auto_increment,
     name VARCHAR(100) NOT NULL,
     primary key(id)
 );
 
-ALTER TABLE
-    products
-CHANGE
-    producer_id
-    brand_id INT;
+delete from ages where  id > 6;
+select * from ages;
 
-insert into producers(name) values
-('Vuong Vy'),
-('Kiki'),
-('GIR'),
-('Jikarma'),
-('Nhu Y');
+insert into ages (name) values (2), (4), (6), (9), (13), (18);
+
+select * from age;
 
 create table products(
 	id INT auto_increment,
-    name VARCHAR(255),
-    material VARCHAR(255),
-    size VARCHAR(225),
-    color VARCHAR(20),
-    description TEXT,
-    category_id INT,
-    producer_id INT,
+    name VARCHAR(255) NOT NULL,
+    size VARCHAR(225) NOT NULL,
+    pieces INT(255) NOT NULL,
+	insiders_points INT (255) NOT NULL,
+    items INT(255) NOT NULL,
+    description TEXT NOT NULL,
+    category_id INT NOT NULL,
+    age_id INT NOT NULL,
     image TEXT,
-    quantity INT,
-    price FLOAT,
+    quantity INT NOT NULL,
+    price FLOAT NOT NULL,
     primary key (id),
     foreign key (category_id) references categories(id), 
-    foreign key (producer_id) references producers(id)
+    foreign key (age_id) references ages(id)
 );
+
 
 create table payment_method (
 	id INT auto_increment primary key,
     name VARCHAR(50) NOT NULL
 );
 
-
 SET SQL_SAFE_UPDATES = 0;
-
-
-insert into products(name, material, size, color, description, brand_id, category_id, image, quantity, price) values
-('Áo phông tay lỡ', 'Cotton', 'S, M, L', 'White, Black, Pink', 'Thiết kế áo thun unisex oversize rộng rãi, thoáng mát.', 1, 1, 'abc', 1000, 17.8 ),
-('Quần hộp Unisex', 'Kaki', 'S, M, L', 'White, Black, Green', 'Thiết kế unisex oversize rộng rãi, thoáng mát.', 3 , 2, 'abc', 1000, 16.9 ),
-('Áo sweater thỏ rùa', 'Len', 'S, M, L', 'White, Black, Green, BabyPink, Grey', 'Thiết kế unisex oversize rộng rãi, ấm áp.', 2, 3, 'abc', 2000, 20.35 ),
-('Áo khoác Unisex', 'Lông cừu, Chất gió xuất dư', 'M, L, XL', 'White, Black, Grey', 'Thiết kế unisex oversize rộng rãi, ấm áp.', 4, 4, 'abc', 900, 25 ),
-('Kính Gentle Monster', 'Thép', 'None', 'Black, Grey', ' JENNIE - 1996 01 từ bộ sưu tập J Bentley Home có gọng hình chữ nhật màu đen thổ toán diêm. Gọng kính mắt mèo này bao gồm tròng kính đen, nổi bật bởi những gọng được trang trí bằng vòng kim loại vàng đặc trưng.', 5, 5, 'abc', 30, 100 ),
-('Áo phông tay lỡ', 'Cotton', 'S, M, L', 'White, Black, Pink', 'Thiết kế áo thun unisex oversize rộng rãi, thoáng mát.', 1, 1, '1686939095_F_23_3_LOOK_655_E15_GH.png', 1000, 17.8 ),
-('Tote Bag', 'Kaki', 'S, M, L', 'White, Black, Green', 'Thiết kế unisex oversize rộng rãi, thoáng mát.', 3 , 2, '1685983389_1ADPO033LAC_H11G_E01_ZHC.png', 1000, 16.9 ),
-('Áo sweater thỏ rùa', 'Len', 'S, M, L', 'White, Black, Green, BabyPink, Grey', 'Thiết kế unisex oversize rộng rãi, ấm áp.', 2, 3, '1685612741_M0455CBAA_M030_E01_ZHC.png', 2000, 20.35 ),
-('Áo khoác Unisex', 'Lông cừu, Chất gió xuất dư', 'M, L, XL', 'White, Black, Grey', 'Thiết kế unisex oversize rộng rãi, ấm áp.', 4, 4, '1685108818_F_23_3_LOOK_314_E01_GH.png', 900, 25 ),
-('Kính Gentle Monster', 'Thép', 'None', 'Black, Grey', ' JENNIE - 1996 01 từ bộ sưu tập J Bentley Home có gọng hình chữ nhật màu đen thổ toán diêm. Gọng kính mắt mèo này bao gồm tròng kính đen, nổi bật bởi những gọng được trang trí bằng vòng kim loại vàng đặc trưng.', 5, 5, '1683884732_341P05A3875_X8839_E01_ZHC.png', 30, 100 );
-
 
 create table orders(
 	id INT auto_increment,
     date_buy DATE,
     status INT,
     customer_id INT,
-    admin_id INT NOT NULL,
+    admin_id INT,
     payment_method INT NOT NULL,
     receiver_name VARCHAR(255) NOT NULL,
     receiver_phone VARCHAR(20) NOT NULL,
@@ -128,24 +108,22 @@ alter table orders add foreign key (payment_method) references payment_method(id
 
 insert into orders(date_buy, customer_id, admin_id, status, payment_method) values ('03-09-2024', 2, 1, 1, 1);
 
-update orders set date_buy = '2024-02-01' where id = 4;
 
 select * from orders;
 
 create table order_details(
-	clothes_id INT,
+	product_id INT,
     order_id INT,
     price FLOAT,
     quantity INT,
-    primary key (clothes_id, order_id)
+    primary key (product_id, order_id)
 );
-alter table order_details add foreign key (clothes_id) references clothes(id) on delete cascade;
+alter table order_details add foreign key (product_id) references products(id) on delete cascade;
 alter table order_details add foreign key (order_id) references orders(id) on delete cascade;
-select * from status;
     
 use design;
 SELECT * FROM order_details ORDER BY order_id;
-SELECT * FROM customers;
+SELECT * FROM products;
 
 insert into payment_method(name) values ('cash'), ('online');
 

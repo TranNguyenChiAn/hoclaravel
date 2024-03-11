@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpMultipleClassDeclarationsInspection */
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
@@ -27,21 +27,31 @@ Route::get('/homepage', [StatisticController::class, 'showSalesDaily']) -> name(
 Route::get('/order_manage', [OrderController::class, 'index']) -> name('admin.order');
 
 //CATEGORY
-Route::get('/category_manage', [CategoryController::class, 'show']) -> name('admin.category');
-Route::get('/addCategory', [CategoryController::class, 'addCategory']) -> name('admin.addCategory');
-Route::post('/storeCategory', [CategoryController::class, 'storeCategory']) -> name('admin.storeCategory');
-Route::get('/{category}/edit', [CategoryController::class, 'editCategory']) -> name('admin.editCategory');
-Route::put('/{category}/edit', [CategoryController::class, 'updateCategory']) -> name('admin.updateCategory');
-Route::delete('/{category}', [CategoryController::class, 'destroy']) -> name('admin.destroyCategory');
+Route::prefix('category')->group(function () {
+    Route::get('/index', [CategoryController::class, 'show'])->name('category.index');
+    Route::get('/addCategory', [CategoryController::class, 'addCategory'])->name('category.create');
+    Route::post('/storeCategory', [CategoryController::class, 'storeCategory'])->name('category.store');
+    Route::get('/{category}/edit', [CategoryController::class, 'editCategory'])->name('category.edit');
+    Route::put('/{category}/edit', [CategoryController::class, 'updateCategory'])->name('category.update');
+    Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
+});
 
+// MANAGE PRODUCT
+Route::prefix('product')->group(function (){
+    Route::get('/index', [ProductController::class,'index'])
+        -> name('product.index');
+    Route::get('/create', [ProductController::class, 'addProduct'])
+        -> name('product.create');
+    Route::post('/create', [ProductController::class, 'storeProduct'])
+        -> name('product.store');
+    Route::get('/{product}/edit', [ProductController::class,'edit'])
+        ->name('product.edit');
+    Route::put('/{product}/edit', [ProductController::class,'update'])
+        ->name('product.update');
+    Route::delete('/{product}', [ProductController::class, 'destroy'])
+        -> name('product.delete');
+});
 
-//PRODUCT
-Route::get('/product', [ProductController::class,'index']) -> name('product');
-Route::get('/addProduct', [ProductController::class, 'addProduct']) -> name('product.create');
-Route::post('/storeProduct', [ProductController::class, 'storeProduct']) -> name('product.store');
-Route::get('/{product}/edit', [ProductController::class,'edit'])->name('product.edit');
-Route::put('/{product}/edit', [ProductController::class,'update'])->name('product.update');
-Route::delete('/{product}', [CategoryController::class, 'delete']) -> name('product.delete');
 
 
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Requests;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,6 +25,7 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => ['required'],
+            'items' => ['required'],
             'price' => ['required', 'regex:/^[0-9]+[0-9.]*$/', 'min:0.1'],
             'quantity' => ['required', 'regex:/^[0-9]+$/', 'min:1'],
             'image' => ['required'],

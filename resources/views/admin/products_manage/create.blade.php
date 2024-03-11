@@ -1,66 +1,102 @@
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
 @include('admin/layout/nav')
 
+<script type="text/javascript">
+    function chooseFile() {
+        let fileSelected = document.getElementById('imageFile').files;
+        if (fileSelected.length > 0) {
+            let fileToLoad = fileSelected[0];
+            let fileReader = new FileReader();
+            fileReader.onload = function(fileLoaderEvent) {
+                let srcData = fileLoaderEvent.target.result;
+                let newImage = document.createElement('img');
+                newImage.src = srcData;
+
+                document.getElementById('image').innerHTML = newImage.outerHTML;
+            }
+            fileReader.readAsDataURL(fileToLoad);
+        }
+    }
+</script>
+
 <section style="width:80%; margin-left: 240px">
     <div class="row g-3">
-        <figure align="center" style="font-weight: bold; font-size: 30px;color: #4d4b4b;"> Add a product </figure>
-        <form class="row g-3 bg-white" method="POST" action="{{route('product.store')}}">
+        <h1 align="center" style="font-weight: bold;color: #2f2ffe;"> Add a product </h1>
+        <form class="row g-3 bg-white" style="padding: 24px 42px;font-size: 18px"
+              method="POST" action="{{route('product.store')}}"
+              enctype='multipart/form-data'>
             @method('POST')
             @csrf
             <input type="hidden" name="id">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label class="form-label">Name</label>
-                <input type="text" class="form-control" name="product_name" placeholder="Product name">
+                <input type="text" class="form-control" name="name"
+                       placeholder="Product name">
             </div>
-            <div class="col-md-6">
-                <label class="form-label">Material</label>
-                <input type="text" class="form-control" name="product_material" placeholder="Product material">
-            </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label class="form-label">Size</label>
-                <input type="text" class="form-control" name="product_size" placeholder="Product size">
+                <input type="text" class="form-control" name="size"
+                       placeholder="Product size">
             </div>
-            <div class="col-md-6">
-                <label class="form-label">Color</label>
-                <input type="text" class="form-control" name="product_color" placeholder="Product color">
+            <div class="col-md-4">
+                <label class="form-label">Pieces</label>
+                <input type="number" class="form-control" name="pieces"
+                       placeholder="Number of pieces">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Insiders points </label>
+                <input type="number" class="form-control" name="insiders_points"
+                       placeholder="Number of insiders points">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label"> Items </label>
+                <input type="number" class="form-control" name="items"
+                       placeholder="Number of items">
             </div>
             <div class="col-12">
                 <label class="form-label">Description</label>
-                <input type="text" class="form-control" name="product_description" placeholder="Product description">
+                <input type="text" class="form-control" name="description"
+                       placeholder="Product description">
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <label for="inputCategory" class="form-label">Category</label>
-                <select id="inputCategory" class="form-select">
+                <select id="inputCategory" class="form-select" name="category_id">
                     <option selected>Choose...</option>
                     @foreach($categories as $category)
-                        <option value="<?= $category->id ?>">{{$category->name}}</option>
+                        <option value="<?= $category->id ?>">
+                            {{$category->name}}
+                        </option>
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-6">
-                <label for="inputBrand" class="form-label">Brand</label>
-                <select id="inputBrand" class="form-select">
+            <div class="col-md-3">
+                <label for="inputBrand" class="form-label">Age</label>
+                <select id="inputBrand" class="form-select" name="age_id">
                     <option selected>Choose...</option>
-                    @foreach($brands as $brand)
-                        <option value="<?= $brand->id ?>">{{$brand->name}}</option>
+                    @foreach($ages as $age)
+                        <option value="<?= $age->id ?>">{{$age->name}}</option>
                     @endforeach
                 </select>
             </div>
 
             </select><br>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <label class="form-label">Price</label>
-                <input type="text" class="form-control" name="product_price" placeholder="Product price">
+                <input type="text" class="form-control" name="price"
+                       placeholder="Product price">
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <label class="form-label">Quantity</label>
-                <input type="text" class="form-control" name="product_quantity" placeholder="Product quantity">
+                <input type="text" class="form-control" name="quantity"
+                       placeholder="Product quantity">
             </div>
             <div class="col-md-6">
-                Image: <input type="file" class="form-control" name="product_image" id="imageFile"
-                              onchange="chooseFile(this)"
-                              accept="image/gif, image/png, image/jpeg">
-                <img src="" alt="" id="image" width="100px" >
+                <br>
+                <label class="form-label"> Image:</label>
+                <input type="file" name="image" id="imageFile"
+                       accept="image/*" onchange="chooseFile(this)">
+                <div id="image" height="150px">
+                </div><br>
             </div>
             <div class="col-md-8">
                 <button class="btn btn-primary" type="submit"> Add </button>
@@ -68,4 +104,5 @@
         </form>
     </div>
 </section>
+
 

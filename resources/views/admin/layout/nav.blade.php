@@ -2,7 +2,6 @@
     <style>
         body {
             margin:0;
-            color: #2F2FFE;
         }
         .navbar {
             position: fixed;
@@ -31,6 +30,7 @@
             text-decoration: none;
             padding-left: 24%;
             padding-top: 10px;
+            font-size: 18px;
         }
 
         .choice:hover {
@@ -59,11 +59,11 @@
             </li>
             <li  class="choice">
                 <img style="width:16px; margin-top: -3px" src="../../image/package.png">
-                <a class="link_in_menu" href="{{ route('admin.product') }}"> Product </a>
+                <a class="link_in_menu" href="{{ route('product.index') }}"> Product </a>
             </li>
             <li class="choice">
                 <img style="width:16px; margin-top: -3px" src="../../image/menu.png">
-                <a class="link_in_menu" href="{{ route('admin.category') }}"> Category </a>
+                <a class="link_in_menu" href="{{ route('category.index') }}"> Category </a>
             </li>
             <li  class="choice">
                 <img style="width:16px; margin-top: -3px" src="../../image/shopping-cart (1).png">

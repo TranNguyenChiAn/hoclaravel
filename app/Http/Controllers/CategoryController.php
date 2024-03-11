@@ -1,16 +1,11 @@
-<?php
+<?php /** @noinspection PhpMultipleClassDeclarationsInspection */
 
 namespace App\Http\Controllers;
 
-use App\Models\Brand;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
-use App\Models\Product;
-use App\Requests\UpdateCategoryRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 
 
@@ -42,7 +37,7 @@ class CategoryController extends Controller
             $array = Arr::add($array, 'name', $request->name);
             //Lấy dữ liệu từ form và lưu lên db
             Category::create($array);
-            return Redirect::route('admin.category');
+            return Redirect::route('category.index');
     }
 
     public function editCategory(Category $category, Request $request)
@@ -60,20 +55,14 @@ class CategoryController extends Controller
 
         $category->update($array);
 
-        return Redirect::route('admin.category');
+        return Redirect::route('category.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Category $category
-     * @return \Illuminate\Http\Response
-     */
 
     public function destroy(Category $category)
     {
         $category->delete();
-        return Redirect::route('admin.category')->with('success', 'Delete a category successfully!');
+        return Redirect::route('category.destroy');
 
     }
 

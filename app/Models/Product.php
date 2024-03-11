@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpMultipleClassDeclarationsInspection */
 
 namespace App\Models;
 
@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+    public $timestamps = false;
 
     protected $table = 'products';
-    protected $fillable = ['product_name', 'quantity', 'price', 'description', 'image', 'category_id', 'brand_id'];
+    protected $fillable = ['name','size', 'pieces', 'insiders_points', 'items', 'description', 'category_id', 'age_id', 'quantity', 'price', 'image'];
 
     public function scopeFilter($query, array $filters)
     {
@@ -25,8 +26,8 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function brand()
+    public function age()
     {
-        return $this->belongsTo(Brand::class);
+        return $this->belongsTo(Age::class);
     }
 }
