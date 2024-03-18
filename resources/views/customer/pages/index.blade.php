@@ -10,15 +10,18 @@
                     <div class="card shadow-sm p-4" >
                         <div class="position-relative">
                                 <!-- Image -->
-                            <img src="{{asset('./images/' . $product->image)}}"
+                            <a href="{{ route('product.detail',$product->id) }}">
+                                <img src="{{asset('./images/' . $product->image)}}"
                                      class="card-img-top object-fit-cover top-0" >
+                            </a>
+
                         </div>
 
                         <div class="card-body">
                             <h5 class="float-start"> {{ $product -> name}} </h5>
                             <br>
-                            <div class="d-flex justify-content-between">
-                                <hr style="width:100%; ">
+                            <div>
+                                <hr style="width:80%; ">
                                 @if($product->quantity == 0 )
                                     <img class="position-absolute top-50 start-50 translate-middle"
                                          src="{{asset('./icons/sold_out.png')}}"
@@ -27,16 +30,15 @@
                                     <img class="position-absolute top-0 start-100 translate-middle"
                                          style="width:60px; z-index:3;transform: rotate(45deg)"
                                          src="{{asset('./icons/out_of_stock.png')}}">
-                                    <div class="card text-end">
+
                                         <a href="{{ route('product.addToCart',$product->id) }}"
-                                           class="nav-link position-absolute rounded-1 p-1 "
+                                           class="nav-link position-absolute end-0 rounded-1 p-2 m-lg-3"
                                            style="background-color: #D4D4FF">
                                             <i class="bi bi-cart h1"></i>
                                         </a>
-                                    </div>
                                 @else
                                     <a href="{{ route('product.addToCart',$product->id) }}"
-                                       class="nav-link position-relative rounded-1 p-2"
+                                       class="nav-link position-absolute end-0 rounded-1 p-2 m-lg-3"
                                        style="background-color: #D4D4FF">
                                         <i class="bi bi-cart h1"></i>
                                     </a>

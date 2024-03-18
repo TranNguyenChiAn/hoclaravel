@@ -1,57 +1,46 @@
+@vite(["resources/sass/app.scss", "resources/js/app.js"])
+@include('customer/layout/nav')
+<title> Product's Detail</title>
 
+<section style="font-family: Arial">
+    <table style="margin-top: 90px;" width="100%" cellspacing="0" cellpadding="0">
+        <tr>
+            <td width="90px" rowspan="4"></td>
+            <td width="480px" rowspan="4">
+                    <img src="{{ asset('./images/'.$product->image)}}" width="420px" height="auto">
+            </td>
+            <td style="color: black" colspan="4">
+                <h2 class="font-weight-bold">{{ $product -> name}}</h2>
+                <h4 class="text-danger"><b>${{ $product -> price}}</b></h4>
+                <p>Category: {{ $product -> category -> name}}</p>
+                <p>Age: {{ $product -> age -> name}}+</p>
+            </td>
+        <tr/>
+        <tr>
+            <td style="vertical-align: top">
+                <p>Pieces: {{ $product -> pieces}}</p>
+            </td>
+            <td>
+                <p>Items:  {{ $product -> items}}</p>
+            </td>
+            <td>
+                <p>Insiders points: {{ $product -> insiders_points}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <span>Description:</span> {{ $product -> description}}
+            </td>
+            <td width="90px" rowspan="4"></td>
+        </tr>
 
-    <style>
-        body {
-            background-color: white;
-        }
-        #out_of_stock {
-            width: 90px;
-            height: auto;
-            position: absolute;
-            margin: -24px 0 0 -50px;
-            rotate: 30deg;
-        }
-        #sold_out {
-            width: 200px;
-            height: auto;
-            position: absolute;
-            margin: 10% 0 0 -24%;
-        }
-    </style>
-    <title> Product's Detail</title>
+    </table>
+    @if($product -> quantity > 0 )
+        <button class="btn px-3 float-end mx-lg-5" style="background-color: #231ec2">
+            <a class="nav-link text-white" href="{{ route('product.addToCart', $product->id) }}">
+                Add to cart
+            </a>
+        </button>
+    @endif
+</section>
 
-<body>
-<div>
-
-        <table style="margin-top: 90px;" width="100%" border="0" cellspacing="0">
-            <tr>
-                <td width="90px" rowspan="2"></td>
-                <td width="480px" rowspan="2">
-                    <img src="../../image/" width="420px" height="auto">
-
-                </td>
-                <td style="vertical-align: top; color: black">
-                    <p class="product_name_detail">clothe['name'] ?</p>
-                    <p class="product_price_detail">$clothe['price'</p>
-                    <p>Description:</p> $clothe['description']
-                    <p>Size:  $clothe['size']</p>
-                    <p>Color: $clothe['color']</p>
-                </td>
-                <td width="100px" rowspan="2"></td>
-            </tr>
-            <tr>
-                <td style="vertical-align: middle">
-                        (['quantity'] > 0 ){
-                    <button class="button add-to-cart">
-                        <a style="color: white" class="link" href="../carts/add to cart.php?id=">
-                            Add to cart
-                        </a>
-                    </button>
-
-                </td>
-            </tr>
-        </table>
-</div>
-
-</body>
-</html>

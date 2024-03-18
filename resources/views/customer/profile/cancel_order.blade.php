@@ -25,5 +25,5 @@ foreach($orders as $order) {
     window.location="history_order.php";
 </script>
 <?php
-//header("Location: history_order.php");
+//header("Location: history_order.blade.php");
 ?>

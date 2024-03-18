@@ -205,7 +205,7 @@ include_once '../connect/close.php';
                 if($order['status'] == 0) {
             ?>
                 <button style="margin:60px 0 0 160px;" class="btn btn-danger">
-                   <a style="color: white" class="link" href="cancel.php?id=<?= $order['id']; ?>">
+                   <a style="color: white" class="link" href="cancel_order.blade.php?id=<?= $order['id']; ?>">
                        Sure
                    </a>
                </button>

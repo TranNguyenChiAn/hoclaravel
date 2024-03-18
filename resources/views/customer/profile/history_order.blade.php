@@ -99,7 +99,7 @@ include_once '../connect/close.php';
                 ?>
             </td>
             <td>
-                <a href="history_order_detail.php?id=<?= $order['id']; ?>">
+                <a href="history_order_detail.blade.php?id=<?= $order['id']; ?>">
                     <img width="32px" src="../../image/add.png">
                 </a>
             </td>

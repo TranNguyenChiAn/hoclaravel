@@ -82,7 +82,7 @@
                 </div><br>
             </div>
             <div class="col-md-8">
-                <button class="btn btn-primary" type="submit"> Add </button>
+                <button class="btn btn-primary float-end" type="submit"> Add </button>
             </div>
         </form>
     </div>

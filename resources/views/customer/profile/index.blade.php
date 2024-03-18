@@ -75,12 +75,12 @@ if (!isset($_SESSION['email_customer'])) {
     </div>
     <div style="display:flex;margin: 18px 0 0 90px; justify-content: flex-start">
         <div class="history_order">
-            <a style="font-weight: bold" class="link" href="history_order.php">
+            <a style="font-weight: bold" class="link" href="history_order.blade.php">
                 History orders
             </a>
         </div>
         <div class="history_order">
-            <a style="font-weight: bold" class="link" href="change_password.php">
+            <a style="font-weight: bold" class="link" href="change_password.blade.php">
                 Change password
             </a>
         </div>

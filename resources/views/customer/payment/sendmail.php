@@ -45,5 +45,5 @@ require 'PHPMailer/src/SMTP.php';
 ?>
 <script>
     alert("Order Successful");
-    window.location="../profile/history_order.php";
+    window.location="../profile/history_order.blade.php";
 </script>

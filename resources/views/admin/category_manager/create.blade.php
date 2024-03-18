@@ -19,7 +19,7 @@
             </div>
             <br>
             <button class="btn btn-primary float-end " type="submit"
-                    style=" font-size: 22px" name="name">
+                    style=" font-size: 22px">
                 Add
             </button>
         </form>

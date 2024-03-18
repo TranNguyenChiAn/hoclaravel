@@ -6,8 +6,8 @@
                  height="36px" class="rounded">
         </li>
         <li class="nav-item">
-            <a class="nav-link link-dark dropdown-toggle" href="{{ route('customer.index') }}" role="button"
-               data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link link-dark dropdown-toggle" href="{{ route('index') }}"
+               role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 PRODUCT
             </a>
             <ul class="dropdown-menu">
@@ -50,7 +50,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link link-dark" href="">
+            <a class="nav-link link-dark" href="{{ route('customer.login') }}">
                 <img width="30px" src="{{asset('./icons/user.png')}}">
             </a>
         </li>
@@ -79,7 +79,7 @@
         </div>
         @php
             //            kiem tra xem cart co ton tai ko
-                            $cartCheck = \Illuminate\Support\Facades\Session::get('cart');
+            $cartCheck = \Illuminate\Support\Facades\Session::get('cart');
         @endphp
         {{--        BODY --}}
         {{--     neu ton tai CART--}}
@@ -90,13 +90,14 @@
                     id="scroll-style">
                     @foreach(Session::get('cart') as $product_id => $product)
                         <li class="mb-3">
-                            <form class="m-0" action="{{route('product.updateCartQuantity', $product_id)}}">
-                                <div class="d-flex justify-content-between">
+                            <form class="m-0" action="{{route('product.updateCart', $product_id)}}">
+                                <div class="d-flex justify-content-around">
                                     <div class="w-20">
                                         <!-- Image -->
                                         <a href="/product/{{$product_id}}"
-                                           class="overflow-hidden ratio ratio-1x1 border rounded d-flex align-items-center justify-content-center">
-                                            <img src="{{asset($product['image'])}}" class="object-fit-cover">
+                                           class="overflow-hidden ratio ratio-1x1 border rounded
+                                           d-flex align-items-center">
+                                            <img src="{{asset('./images/80112.webp')}}" class="object-fit-cover">
                                         </a>
                                     </div>
                                     <div class="w-75">
@@ -110,18 +111,12 @@
                                                             {{$product['product_name']}}
                                                         </a>
                                                     </div>
-                                                    <div>
-{{--                                                        {{$product['category']['name']}}ml--}}
-                                                    </div>
                                                 </div>
 
                                                 <div class="d-flex align-items-center justify-content-between">
                                                     {{--select--}}
                                                     <div class="text-start text-success">
                                                         ${{$product['price']}}
-                                                    </div>
-                                                    <div>
-                                                        <i class="bi bi-x"></i>
                                                     </div>
                                                     <!-- Quantity -->
                                                     <div class="text-end w-40">

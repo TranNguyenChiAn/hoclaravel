@@ -73,11 +73,22 @@ Route::prefix('/customer_manage')->group(function () {
 
 
 //---------- CUSTOMER -----------
+Route::get('/register', [CustomerController::class, 'register'])->name('customer.register');
+Route::post('/register', [CustomerController::class, 'registerProcess'])->name('customer.registerProcess');
+
+Route::get('/login', [CustomerController::class, 'login'])->name('customer.login');
+Route::post('/login', [CustomerController::class, 'loginProcess'])->name('customer.loginProcess');
+
+Route::get('/logout', [CustomerController::class, 'logout'])->name('customer.logout');
+Route::get('/forgot_password', [CustomerController::class, 'forgotPassword'])->name('customer.forgotPassword');
+
 Route::prefix('customer')->group(function (){
     Route::get('/index', [CustomerController::class, 'showProduct'])
         -> name('index');
-    Route::get('/profile', [CustomerController::class, 'editProfile'])->name('profile');
+    Route::get('/profile', [CustomerController::class, 'profile'])->name('profile');
     Route::put('/profile', [CustomerController::class, 'updateProfile'])->name('profile.update');
+
+    Route::get('/product/{id}', [CustomerController::class, 'productDetail'])->name('product.detail');
 
     Route::get('/orders_history', [CustomerController::class, 'showOrderHistory'])->name('ordersHistory');
     Route::get('/order_{id}/detail',[OrderController::class,'orderDetail'])->name('orderDetail');
@@ -86,9 +97,8 @@ Route::prefix('customer')->group(function (){
     Route::put('/change_password', [CustomerController::class, 'updatePassword'])->name('pwd.update');
 
     Route::get('/cart', [ProductController::class, 'showCart'])->name('product.cart');
-    Route::get('/cartAjax', [ProductController::class, 'cartAjax'])->name('product.cartAjax');
     Route::get('/addToCart/{id}', [ProductController::class, 'addToCart'])->name('product.addToCart');
-    Route::get('/updateCartQuantity/{id}', [ProductController::class, 'updateCart'])->name('product.updateCartQuantity');
+    Route::get('/updateCart/{id}', [ProductController::class, 'updateCart'])->name('product.updateCart');
     Route::get('/deleteFromCart/{id}', [ProductController::class, 'deleteFromCart'])->name('product.deleteFromCart');
     Route::get('/deleteAllFromCart', [ProductController::class, 'deleteAllFromCart'])->name('product.deleteAllFromCart');
 
