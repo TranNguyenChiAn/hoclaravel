@@ -1,6 +1,4 @@
-<?php /** @noinspection DuplicatedCode */
-
-/** @noinspection PhpMultipleClassDeclarationsInspection */
+<?php
 
 namespace App\Http\Controllers;
 
@@ -11,6 +9,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
@@ -23,7 +23,7 @@ class ProductController extends Controller
 
         $products = Product::with('age')
         ->with('category')
-        ->simplePaginate(5);
+        ->paginate(5);
 
         return view('admin.products_manage.index', [
             'products' => $products,
@@ -68,7 +68,7 @@ class ProductController extends Controller
         return Redirect::route('product.index');
     }
 
-    public function edit(Product $product, Request $request)
+    public function edit(Product $product)
     {
         $ages = Age::all();
         $categories = Category::all();
@@ -81,13 +81,17 @@ class ProductController extends Controller
 
     }
 
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(Request $request, Product $product)
     {
-        $image = $request->file('image');
-        $imageName = $image->getClientOriginalName();
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $image = $request->file('image');
+            $imageName = $image->getClientOriginalName();
 
-        // Lưu ảnh vào thư mục public/images
-        $image->move(public_path('images'), $imageName);
+            // Lưu ảnh vào thư mục public/images
+            $image->move(public_path('images'), $imageName);
+        }else{
+            $imageName = $product -> image;
+        }
 
         //Lấy dữ liệu trong form và update lên db
         $array = [];
@@ -103,9 +107,8 @@ class ProductController extends Controller
         $array = Arr::add($array, 'quantity', $request->quantity);
         $array = Arr::add($array, 'image', $imageName);
 
-        $product->image = $imageName;
-        $product->save();
         $product->update($array);
+
         //Quay về danh sách
         return Redirect::route('product.index');
     }
@@ -117,4 +120,62 @@ class ProductController extends Controller
         return Redirect::route('product.index');
     }
 
+
+
+//    CART MANAGE
+
+    public function showCart(){
+
+    }
+
+    public function addToCart(int $id){
+        $product = Product::with('age')
+            ->with('category')
+            ->where('id', $id)
+            ->first();
+//        neu da co cart
+        if (Session::exists('cart')) {
+//            lay cart hien tai
+            $cart = Session::get('cart');
+//            neu san pham da co trong cart => +1 so luong
+            if (isset($cart[$product->id])) {
+                $cart[$product->id]['quantity']++;
+            } else {
+//                them sp vao cart
+                $cart = Arr::add($cart, $product->id, [
+                    'image' => $product->image,
+                    'product_name' => $product->product_name,
+                    'price' => $product->price,
+                    'quantity' => 1
+                ]);
+            }
+        } else {
+//            tao cart moi
+            $cart = array();
+            $cart = Arr::add($cart, $product->id, [
+                'image' => $product->image,
+                'product_name' => $product->product_name,
+                'price' => $product->price,
+                'quantity' => 1
+            ]);
+        }
+//        nem cart len session
+        Session::put(['cart' => $cart]);
+
+        return Redirect::route('index');
+
+    }
+
+
+    public function updateCart(){
+
+    }
+
+    public function deleteFromCart(){
+
+    }
+
+    public function deleteAllFromCart(){
+
+    }
 }

@@ -5,7 +5,8 @@
 
 <section style="margin:60px 3% auto 20%">
     <div class="row-cols-auto form-control bg-white" >
-        <form class="form-control border-0 bg-white" method="post" action="{{route('admin.storeCategory')}}">
+        <form class="form-control border-0 bg-white p-4" method="post"
+              action="{{route('category.store')}}">
             @method('POST')
             @csrf
             <input type="hidden" name="id">
@@ -13,13 +14,16 @@
                 <label class="form-label" style="color: #2f2ffe; font-size: 26px"> Add category name</label>
                 <br>
                 <br>
-                <input type="text" class="form-control" style=" font-size: 22px" name="name" placeholder="Category name">
+                <input type="text" class="form-control" style=" font-size: 22px" name="name"
+                       placeholder="Category name">
             </div>
             <br>
-            <div class="col-md-6">
-                <button class="btn btn-primary" type="submit" style=" font-size: 22px" name="name"> Add </button>
-            </div>
+            <button class="btn btn-primary float-end " type="submit"
+                    style=" font-size: 22px" name="name">
+                Add
+            </button>
         </form>
+        <br>
     </div>
 </section>
 

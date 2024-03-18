@@ -3,9 +3,11 @@
 
 <section style="width:80%; margin-left: 224px">
     <!-- LIST -->
-    <h1 align="center" style="color: #2f2ffe;">
+    <br>
+    <h1 align="center" style="font-weight: bold;color: #2f2ffe;font-family: Arial">
         MANAGE PRODUCTS
     </h1>
+    <br>
 
     <table class="table table-hover">
         <tr>
@@ -72,7 +74,7 @@
         <br>
     </div>
 
-    <button class="btn btn-primary end-0">
+    <button class="btn btn-primary float-end translate-middle-y">
         <a class="nav-link" href="{{route('product.create')}}"> + Add a record </a>
     </button>
 

@@ -14,14 +14,6 @@ class Customer extends Model implements \Illuminate\Contracts\Auth\Authenticatab
     //disable created_at updated_at
     public $timestamps = false;
 
-    protected $fillable = ['first_name', 'last_name', 'email', 'password', 'phone_number', 'address', 'status'];
+    protected $fillable = ['name','email', 'password', 'phone', 'address', 'gender'];
     protected $table = 'customers';
-
-    public function scopeFilter($query, array $filters)
-    {
-        if ($filters['search'] ?? false) {
-            $query->where('first_name', 'like', '%' . request('search') . '%')
-                ->orWhere('last_name', 'like', '%' . request('search') . '%');
-        }
-    }
 }

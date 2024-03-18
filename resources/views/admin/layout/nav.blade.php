@@ -50,28 +50,32 @@
     <div class="navbar">
         <ul class="navbar_menu">
             <li class="choice">
-                <img src="{{asset('image/celement cat.png')}}" alt="brand"
+                <img src="{{asset('./icons/celement cat.png')}}" alt="brand"
                      height="32" class="rounded">
             </li>
             <li class="choice">
-                <img style="width:16px; margin-top: -3px" src="../../image/statistic.png">
+                <img style="width:16px; margin-top: -3px" src="{{asset('./icons/statistic.png' )}}">
                 <a class="link_in_menu" href="../homepage/index.blade.php"> Statistics </a>
             </li>
             <li  class="choice">
-                <img style="width:16px; margin-top: -3px" src="../../image/package.png">
+                <img style="width:16px; margin-top: -3px" src="{{asset('./icons/package.png')}}">
                 <a class="link_in_menu" href="{{ route('product.index') }}"> Product </a>
             </li>
             <li class="choice">
-                <img style="width:16px; margin-top: -3px" src="../../image/menu.png">
+                <img style="width:16px; margin-top: -3px" src="{{asset('./icons/menu.png')}}">
                 <a class="link_in_menu" href="{{ route('category.index') }}"> Category </a>
             </li>
             <li  class="choice">
-                <img style="width:16px; margin-top: -3px" src="../../image/shopping-cart (1).png">
-                <a class="link_in_menu" href="{{ route('admin.order') }}"> Order </a>
+                <img style="width:16px; margin-top: -3px" src="{{asset('./icons/shopping-cart (1).png')}}">
+                <a class="link_in_menu" href="{{ route('order.index') }}"> Order </a>
             </li>
             <li  class="choice">
-                <img style="width:16px; margin-top: -3px" src="../../image/log-out.png">
-                <a class="link_in_menu" href="../account/logout_admin.php"> Logout </a>
+                <img style="width:16px; margin-top: -3px" src="{{asset('./icons/customer.png')}}">
+                <a class="link_in_menu" href="{{ route('customer_manage.index') }}"> Customer </a>
+            </li>
+            <li  class="choice">
+                <img style="width:16px; margin-top: -3px" src="{{asset('./icons/log-out.png')}}">
+                <a class="link_in_menu" href="account.logout"> Logout </a>
             </li>
         </ul>
     </div>

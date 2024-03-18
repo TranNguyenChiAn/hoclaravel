@@ -5,7 +5,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\StatisticController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ClientController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,24 +17,33 @@ use App\Http\Controllers\StatisticController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/', [CustomerController::class,'index']) -> name('home');
+
+// -----------------ADMIN------------------
+
+//ORDER MANAGER
+Route::prefix('/order')->group(function () {
+    Route::get('/index', [OrderController::class, 'index'])
+    -> name('order.index');
+});
+//MANAGE ACCOUNT ADMIN
 Route::get('/admin', [AdminController::class, 'show']) -> name('admin');
 
-Route::get('/', [ProductController::class,'index']) -> name('admin.product');
-
-Route::get('/homepage', [StatisticController::class, 'showSalesDaily']) -> name('admin.saleDaily');
-
-//ORDER
-Route::get('/order_manage', [OrderController::class, 'index']) -> name('admin.order');
-
-//CATEGORY
+//CATEGORY MANAGER
 Route::prefix('category')->group(function () {
-    Route::get('/index', [CategoryController::class, 'show'])->name('category.index');
-    Route::get('/addCategory', [CategoryController::class, 'addCategory'])->name('category.create');
-    Route::post('/storeCategory', [CategoryController::class, 'storeCategory'])->name('category.store');
-    Route::get('/{category}/edit', [CategoryController::class, 'editCategory'])->name('category.edit');
-    Route::put('/{category}/edit', [CategoryController::class, 'updateCategory'])->name('category.update');
-    Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
+    Route::get('/index', [CategoryController::class, 'show'])
+        ->name('category.index');
+    Route::get('/addCategory', [CategoryController::class, 'addCategory'])
+        ->name('category.create');
+    Route::post('/storeCategory', [CategoryController::class, 'storeCategory'])
+        ->name('category.store');
+    Route::get('/{category}/edit', [CategoryController::class, 'editCategory'])
+        ->name('category.edit');
+    Route::put('/{category}/edit', [CategoryController::class, 'updateCategory'])
+        ->name('category.update');
+    Route::delete('/{category}', [CategoryController::class, 'destroy'])
+        ->name('category.destroy');
 });
 
 // MANAGE PRODUCT
@@ -52,6 +62,41 @@ Route::prefix('product')->group(function (){
         -> name('product.delete');
 });
 
+
+//CUSTOMER MANAGER
+Route::prefix('/customer_manage')->group(function () {
+    Route::get('/index', [CustomerController::class, 'index'])
+        -> name('customer_manage.index');
+});
+
+//---------- END ADMIN ----------
+
+
+//---------- CUSTOMER -----------
+Route::prefix('customer')->group(function (){
+    Route::get('/index', [CustomerController::class, 'showProduct'])
+        -> name('index');
+    Route::get('/profile', [CustomerController::class, 'editProfile'])->name('profile');
+    Route::put('/profile', [CustomerController::class, 'updateProfile'])->name('profile.update');
+
+    Route::get('/orders_history', [CustomerController::class, 'showOrderHistory'])->name('ordersHistory');
+    Route::get('/order_{id}/detail',[OrderController::class,'orderDetail'])->name('orderDetail');
+
+    Route::get('/change_password', [CustomerController::class, 'editPassword'])->name('pwd.edit');
+    Route::put('/change_password', [CustomerController::class, 'updatePassword'])->name('pwd.update');
+
+    Route::get('/cart', [ProductController::class, 'showCart'])->name('product.cart');
+    Route::get('/cartAjax', [ProductController::class, 'cartAjax'])->name('product.cartAjax');
+    Route::get('/addToCart/{id}', [ProductController::class, 'addToCart'])->name('product.addToCart');
+    Route::get('/updateCartQuantity/{id}', [ProductController::class, 'updateCart'])->name('product.updateCartQuantity');
+    Route::get('/deleteFromCart/{id}', [ProductController::class, 'deleteFromCart'])->name('product.deleteFromCart');
+    Route::get('/deleteAllFromCart', [ProductController::class, 'deleteAllFromCart'])->name('product.deleteAllFromCart');
+
+    Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout', [OrderController::class, 'checkoutProcess'])->name('checkoutProcess');
+});
+
+//---------- END CUSTOMER -----------
 
 
 

@@ -2,8 +2,11 @@
 @include('admin/layout/nav')
 
 <section style="width:80%; margin-left: 210px">
-    <figure align="center" style="font-weight: bold; font-size: 30px;color: #2F2FFE;"> MANAGE CATEGORY </figure>
-    <table class="table table-striped">
+    <h1 align="center" style="font-weight: bold;color: #2f2ffe;font-family: Arial">
+        MANAGE CATEGORIES
+    </h1>
+    <br>
+    <table class="table">
         <tr>
             <th class="col-2"> ID </th>
             <th class="col-8"> Name </th>
@@ -20,12 +23,12 @@
                     {{$category->name}}
                 </td>
                 <td>
-                    <a href="{{route('admin.editCategory', $category)}}">
-                        <i class="bi bi-magic"></i>
+                    <a href="{{route('category.edit', $category)}}">
+                        <i class="bi bi-magic text-black"></i>
                     </a>
                 </td>
                 <td>
-                    <form method="post" action="{{ route('admin.destroyCategory', $category) }}">
+                    <form method="post" action="{{ route('category.destroy', $category) }}">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Delete</button>
@@ -34,7 +37,7 @@
             </tr>
         @endforeach
     </table>
-    <button class="btn btn-primary" type="submit">
-        <a class="nav-link" href="{{route('admin.addCategory')}}"> Add category </a>
+    <button class="btn btn-primary float-end m-3" type="submit">
+        <a class="nav-link" href="{{route('category.create')}}"> + Add category </a>
     </button>
 </section>

@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Redirect;
 
 class OrderController extends Controller
 {
+
+    public function checkout(){
+
+    }
+
+    public function checkoutProcess(){
+
+    }
+
     public function index(Request $request)
     {
         //search
@@ -44,5 +53,9 @@ class OrderController extends Controller
             'search' => $search,
             'f_customer' => $customer,
         ]);
+    }
+
+    public function orderDetail(){
+
     }
 }

@@ -11,15 +11,8 @@ class Product extends Model
     public $timestamps = false;
 
     protected $table = 'products';
-    protected $fillable = ['name','size', 'pieces', 'insiders_points', 'items', 'description', 'category_id', 'age_id', 'quantity', 'price', 'image'];
-
-    public function scopeFilter($query, array $filters)
-    {
-        if ($filters['search'] ?? false) {
-            $query->where('product_name', 'like', '%' . request('search') . '%')
-                ->orWhere('description', 'like', '%' . request('search') . '%');
-        }
-    }
+    protected $fillable = ['name','size', 'pieces', 'insiders_points',
+        'items', 'description', 'category_id', 'age_id', 'quantity', 'price', 'image'];
 
     public function category()
     {
