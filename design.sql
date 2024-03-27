@@ -38,6 +38,8 @@ insert into customers(name, email, password, phone, gender, address) values
 
 select * from customers;
 
+update customers set email='chiantrannguyen@gmail.com' where id =1;
+
 create table categories(
 	id INT auto_increment primary key,
     name VARCHAR(100) NOT NULL unique
@@ -86,6 +88,7 @@ create table payment_method (
 	id INT auto_increment primary key,
     name VARCHAR(50) NOT NULL
 );
+insert into payment_method (name) values ('COD'),('Banking'), ('Momo'), ('VNPAY');
 
 SET SQL_SAFE_UPDATES = 0;
 
@@ -111,6 +114,10 @@ insert into orders(date_buy, customer_id, admin_id, status, payment_method) valu
 
 select * from orders;
 
+delete from orders;
+
+
+
 create table order_details(
 	product_id INT,
     order_id INT,
@@ -122,7 +129,7 @@ alter table order_details add foreign key (product_id) references products(id) o
 alter table order_details add foreign key (order_id) references orders(id) on delete cascade;
     
 use design;
-SELECT * FROM order_details ORDER BY order_id;
+SELECT * FROM order_details;
 SELECT * FROM products;
 
 insert into payment_method(name) values ('cash'), ('online');
@@ -139,7 +146,6 @@ INNER JOIN orders  ON orders.id = order_details.order_id;
 
 use design;
 
-
 select * from customers;
 select * from admins;
 select * from products;
@@ -147,6 +153,7 @@ select * from brands;
 select * from categories;
 select * from orders;
 select * from order_details;
+select * from payment_method;
 
 
 

@@ -2,6 +2,7 @@
 @include('admin/layout/nav')
 
 <section style="width:80%; margin-left: 210px">
+    <br>
     <h1 align="center" style="font-weight: bold;color: #2F2FFE;font-family: Arial;">
         MANAGE CUSTOMER
     </h1>

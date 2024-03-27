@@ -1,10 +1,11 @@
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
 @include('admin/layout/nav')
 
-
-<section style="width:80%; margin-left: 240px">
+<section style="width:78%; margin-left: 240px;">
     <div class="row g-3">
-        <h1 align="center" style="font-weight: bold;color: #2f2ffe;"> Add a product </h1>
+        <h1 align="center" style="font-weight: bolder;color: #2f2ffe; font-family: Inter; margin-top:30px">
+            Add a product
+        </h1>
         <form class="row g-3 bg-white needs-validation"  style="padding: 24px 42px;font-size: 18px"
               method="POST" action="{{route('product.store')}}"
               enctype='multipart/form-data' novalidate>
@@ -78,10 +79,16 @@
                 <label class="form-label"> Image:</label>
                 <input type="file" name="image" id="imageFile"
                        accept="image/*" onchange="chooseFile(this)" required>
-                <div id="image" height="150px">
+
+                <style>
+                    #image img {
+                        height: 180px;
+                    }
+                </style>
+                <div id="image">
                 </div><br>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <button class="btn btn-primary float-end" type="submit"> Add </button>
             </div>
         </form>
@@ -98,7 +105,7 @@
         // Loop over them and prevent submission
         Array.from(forms).forEach(form => {
             form.addEventListener('submit', event => {
-                if (!form.checkValidity() || ) {
+                if (!form.checkValidity()) {
                     event.preventDefault()
                     event.stopPropagation()
                 }

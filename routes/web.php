@@ -6,7 +6,11 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\ClientController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\MailController;
+use App\Http\Middleware\CheckLoginCustomer;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,10 +26,15 @@ Route::get('/', [CustomerController::class,'index']) -> name('home');
 
 // -----------------ADMIN------------------
 
-//ORDER MANAGER
+// MANAGE ORDER ADMIN
 Route::prefix('/order')->group(function () {
     Route::get('/index', [OrderController::class, 'index'])
     -> name('order.index');
+    Route::get('/editOrder/{id}', [OrderController::class, 'editOrder'])
+        -> name('order.edit');
+    Route::put('/order_{order}/edit', [OrderController::class, 'updateOrder'])
+    ->name('order.update');
+
 });
 //MANAGE ACCOUNT ADMIN
 Route::get('/admin', [AdminController::class, 'show']) -> name('admin');
@@ -74,39 +83,56 @@ Route::prefix('/customer_manage')->group(function () {
 
 //---------- CUSTOMER -----------
 Route::get('/register', [CustomerController::class, 'register'])->name('customer.register');
-Route::post('/register', [CustomerController::class, 'registerProcess'])->name('customer.registerProcess');
+Route::post('/register', [CustomerController::class, 'registerProcess'])
+    ->name('customer.registerProcess');
+//Route::match (['get', 'post'], '/register', [CustomerController::class, 'register']) -> name('register');
 
 Route::get('/login', [CustomerController::class, 'login'])->name('customer.login');
 Route::post('/login', [CustomerController::class, 'loginProcess'])->name('customer.loginProcess');
 
 Route::get('/logout', [CustomerController::class, 'logout'])->name('customer.logout');
-Route::get('/forgot_password', [CustomerController::class, 'forgotPassword'])->name('customer.forgotPassword');
+Route::get('/forgot_password', [CustomerController::class, 'forgotPassword'])
+    ->name('customer.forgotPassword');
 
-Route::prefix('customer')->group(function (){
+Route::prefix('customer') ->group(function () {
     Route::get('/index', [CustomerController::class, 'showProduct'])
         -> name('index');
+
+    Route::get('/product/{id}', [CustomerController::class, 'productDetail'])
+        ->name('product.detail');
+});
+
+Route::middleware(CheckLoginCustomer::class)->group(function (){
     Route::get('/profile', [CustomerController::class, 'profile'])->name('profile');
     Route::put('/profile', [CustomerController::class, 'updateProfile'])->name('profile.update');
 
-    Route::get('/product/{id}', [CustomerController::class, 'productDetail'])->name('product.detail');
-
-    Route::get('/orders_history', [CustomerController::class, 'showOrderHistory'])->name('ordersHistory');
+    Route::get('/orders_history', [CustomerController::class, 'showOrderHistory'])
+        ->name('ordersHistory');
     Route::get('/order_{id}/detail',[OrderController::class,'orderDetail'])->name('orderDetail');
 
-    Route::get('/change_password', [CustomerController::class, 'editPassword'])->name('pwd.edit');
-    Route::put('/change_password', [CustomerController::class, 'updatePassword'])->name('pwd.update');
+    Route::get('/change_password', [ForgotPasswordController::class, 'editPassword'])->name('pwd.edit');
+    Route::put('/change_password', [ResetPasswordController::class, 'updatePassword'])->name('pwd.update');
 
     Route::get('/cart', [ProductController::class, 'showCart'])->name('product.cart');
-    Route::get('/addToCart/{id}', [ProductController::class, 'addToCart'])->name('product.addToCart');
-    Route::get('/updateCart/{id}', [ProductController::class, 'updateCart'])->name('product.updateCart');
-    Route::get('/deleteFromCart/{id}', [ProductController::class, 'deleteFromCart'])->name('product.deleteFromCart');
-    Route::get('/deleteAllFromCart', [ProductController::class, 'deleteAllFromCart'])->name('product.deleteAllFromCart');
+    Route::get('/addToCart/{id}', [ProductController::class, 'addToCart'])
+        ->name('product.addToCart');
+    Route::get('/updateCart/{id}', [ProductController::class, 'updateCart'])
+        ->name('product.updateCart');
+    Route::get('/deleteFromCart/{id}', [ProductController::class, 'deleteFromCart'])
+        ->name('product.deleteFromCart');
+    Route::get('/deleteAllFromCart', [ProductController::class, 'deleteAllFromCart'])
+        ->name('product.deleteAllFromCart');
 
     Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
-    Route::post('/checkout', [OrderController::class, 'checkoutProcess'])->name('checkoutProcess');
+    Route::post('/checkoutProcess', [OrderController::class, 'checkoutProcess'])->name('checkoutProcess');
+    Route::get('/payment', [OrderController::class, 'payment'])->name('payment');
+
+    Route::get('/contact', [CustomerController::class, 'contact']) ->name('contact');
 });
 
 //---------- END CUSTOMER -----------
+
+Route::get('/sendmail', [MailController::class, 'index']);
 
 
 

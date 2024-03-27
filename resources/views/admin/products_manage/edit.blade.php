@@ -103,13 +103,17 @@
                 <label class="form-label"> Image:</label>
                 <input type="file" name="image" id="imageFile"
                        accept="image/*" onchange="chooseFile(this)">
-                <div id="imageUpload" height="150px">
-                    <img style="object-fit: cover; width: 150px; height: 150px"
-                         src="{{ asset('./images/' . $product->image) }}">
+                <style>
+                    #imageUpload img {
+                        height: 180px;
+                    }
+                </style>
+                <div id="imageUpload">
+                    <img src="{{ asset('./images/' . $product->image) }}">
                 </div>
             </div>
-            <div class="col-md-8">
-                <button class="btn btn-primary" type="submit"> Update </button>
+            <div class="col-md-10">
+                <button class="btn btn-primary float-end" type="submit"> Update </button>
             </div>
         </form>
     </div>

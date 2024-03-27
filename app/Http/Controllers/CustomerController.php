@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Age;
 use App\Models\Customer;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
@@ -57,21 +61,69 @@ class CustomerController extends Controller
 
     public function loginProcess(Request $request)
     {
-        $account = $request->only(['email', 'password']);
-        $check = Auth::guard('customer')->attempt($account);
+        $validator = Validator::make($request->all(), [
+            'email'=>'required',
+            'password'=> 'required'
+        ], [
+            'email.required'=>'Email can not be empty',
+            'password.required'=>'Password can not be empty',
+        ]);
 
-        if ($check) {
+        if($validator->fails()){
+            return redirect()->route('customer.login')->withErrors($validator)->withInput();
+        }
+
+        $loginInfor = ['email' => $request->email, 'password' => $request->password];
+
+        if(Auth::guard('customer')->attempt($loginInfor)){
+
             //Lấy thông tin của customer đang login
             $customer = Auth::guard('customer')->user();
             //Cho login
             Auth::guard('customer')->login($customer);
             //Ném thông tin customer đăng nhập lên session
             session(['customer' => $customer]);
-            return Redirect::route('profile');
-        } else {
-            //cho quay về trang login
-            return Redirect::back();
+//            $request->session()->regenerate();
+            return redirect()->route('index');
         }
+        return redirect()->back()->withErrors($validator)->withInput();
+    }
+
+    public function register (){
+        return view('customer.account.register');
+    }
+
+    public function registerProcess (Request $request){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'email'=>'required|unique:customers',
+            'phone'=>'required|unique:customers',
+            'address'=>'required|max:255',
+            'password'=> 'required'
+            ], [
+            'name.required' => 'Name can not be empty',
+            'email.required'=>'Email can not be empty',
+            'phone.required'=>'Phone can not be empty',
+            'address.required'=>'Address can not be empty',
+            'password.required'=>'Password can not be empty',
+            'email.unique'=>'Email has been exist',
+            'phone.unique'=>'Phone has been exist',
+        ]);
+
+        if($validator->fails()){
+            return redirect()->route('customer.register')->withErrors($validator)->withInput();
+        }
+
+        $customer = new Customer();
+        $customer->name = $request->name;
+        $customer->email = $request->email;
+        $customer->phone= $request->phone;
+        $customer->gender = $request->gender;
+        $customer->address = $request->address;
+        $customer->setPasswordAttributes($request->password);
+        $customer->save();
+
+        return redirect()->route('customer.login');
     }
 
     public function profile(){
@@ -91,6 +143,19 @@ class CustomerController extends Controller
 
 
     public function showOrderHistory(){
+        $customer_id = Auth::guard('customer')->id();
+        $customer = Customer::find($customer_id);
+        $orders = Order::with('customer')
+            ->with('order_detail')
+            ->where('customer_id','=', $customer_id)
+            ->orderBy('id', 'desc')
+            ->paginate(6)
+            ->withQueryString();
+
+        return view('customer.profile.history_order', [
+            'customer' => $customer,
+            'orders' => $orders,
+        ]);
 
     }
 
@@ -100,6 +165,10 @@ class CustomerController extends Controller
 
     public function updatePassword(){
 
+    }
+
+    public function contact(){
+        return view('customer.contact.form');
     }
 
 }

@@ -11,7 +11,7 @@
                 width: 120%;border: none; padding:10px 80px">
             @csrf
             <div class="my-4 text-center">
-                <h1 style="font-weight: bold">LOGIN</h1>
+                <h1 style="font-weight: bold">Reset password</h1>
             </div>
             @if($errors -> has('email'))
                 <div class="">
@@ -51,8 +51,8 @@
                 </div>
                 <div style="z-index: 2">
                     <b><i>
-                       <a class="text-white" href="{{route('customer.forgotPassword')}}">Forgot password</a>
-                    </i></b>
+                            <a class="text-white" href="{{route('customer.forgotPassword')}}">Forgot password</a>
+                        </i></b>
                 </div>
             </div>
         </div>

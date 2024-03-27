@@ -1,189 +1,111 @@
-<title>Register</title>
+<title>Customer Register</title>
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
-<x-layout>
-    @include('layouts/nav')
-    <div class="container h-90 mt-5 d-flex justify-content-center align-items-center">
-        <form method="post" action="{{route('customer.registerProcess')}}" enctype="multipart/form-data"
-              class="border bg-white p-3 rounded m-0">
+
+<section style="font-family: Inter">
+    <img height="100%" width="100%" class="float-end top-0 position-absolute object-fit-cover"
+         src="{{ asset('./images/login_bg.png')}}">
+    <div class="position-absolute top-50 start-50 translate-middle-y">
+        <form method="post" action="{{ route('customer.registerProcess') }}"
+              class="form-control rounded-4 px-xl-5 " novalidate
+              style="z-index: 3;width: 150%;border: none">
             @csrf
             <div class="my-4 text-center">
-                <h1 class="h1">Register</h1>
+                <h1 style="font-weight: bold; color:#2F2FFE">REGISTER</h1>
+            </div>
+            <div class="form-group mb-3">
+                    <label class="form-label">Name:</label>
+                    <input type="text" name="name" class="form-control"
+                           placeholder="Full name"
+                           value="{{ old('name') }}">
+            </div>
+            @if($errors -> has('name'))
+                <div class="md-3">
+                <span class="text-danger"> {{ $errors -> first('name') }} </span>
+                </div>
+            @endif
+
+            @if($errors -> has('email'))
+                <div class="">
+                    <span class="text-danger"> {{ $errors -> first('email') }} </span>
+                </div>
+            @endif
+            <div class="mb-3">
+                <input type="email" name="email" class="form-control"
+                       placeholder="Email address"
+                value="{{ old('email') }}">
             </div>
 
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="first_name" class="form-label">First name</label>
-                    <input type="text" name="first_name" class="form-control" id="first_name"
-                           value="{{old('first_name')}}">
-                    @if($errors->has('first_name'))
-                        {{ $errors->first('first_name') }}
-                    @endif
+            @if($errors -> has('password'))
+                <div class="">
+                    <span class="text-danger"> {{ $errors -> first('password') }} </span>
                 </div>
-
-                <div class=" col-md-6 mb-3">
-                    <label for="last_name" class="form-label">Last name</label>
-                    <input type="text" name="last_name" class="form-control" id="last_name"
-                           value="{{old('last_name')}}">
-                    @if($errors->has('last_name'))
-                        {{ $errors->first('last_name') }}
-                    @endif
-                </div>
+            @endif
+            <div class="mb-3">
+                <input type="password" name="password" class="form-control"
+                       placeholder="Password"
+                       value="{{ old('password') }}">
             </div>
 
-            <div class=" row">
-                <div class="col-md-6 mb-3">
-                    <label for="email" class="form-label">Email address</label>
-                    <input type="email" name="email" class="form-control" id="email" value="{{old('email')}}">
-                    @if($errors->has('email'))
-                        {{ $errors->first('email') }}
-                    @endif
+            @if($errors -> has('phone'))
+                <div class="">
+                    <span class="text-danger"> {{ $errors -> first('phone') }} </span>
                 </div>
-
-                <div class="col-md-6 mb-3">
-                    <label for="phone_number" class="form-label">Phone number</label>
-                    <input type="number" name="phone_number" class="form-control" id="phone_number"
-                           value="{{old('phone_number')}}">
-                    @if($errors->has('phone_number'))
-                        {{ $errors->first('phone_number') }}
-                    @endif
-                </div>
-            </div>
-
-            <div class=" row">
-                <div class="col-md-6 mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="text" name="password" class="form-control" id="password"
-                           value="{{old('password')}}">
-                    @if($errors->has('password'))
-                        {{ $errors->first('password') }}
-                    @endif
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label for="password_2" class="form-label">Re-enter password</label>
-                    <input type="text" name="password_2" class="form-control" id="password_2"
-                           value="{{old('password_2')}}">
-                    @if($errors->has('password_2'))
-                        {{ $errors->first('password_2') }}
-                    @endif
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12 mb-3">
-                    <label for="address" class="form-label">Address</label>
-                    <input type="text" name="address" class="form-control" id="address" value="{{old('address')}}">
-                    @if($errors->has('address'))
-                        {{ $errors->first('address') }}
-                    @endif
-                </div>
-            </div>
-
-            <input class="hidden invisible opacity-0" type="hidden"
-                   name="status" value="1" readonly>
-
-            <div class="mb-3 d-flex justify-content-center align-items-center">
-                <button class="btn btn-primary rounded-5 px-4">Register</button>
-            </div>
-
-            <div class="form-text d-flex justify-content-between align-items-center">
-                <div class="me-5">
-                    <a href="{{route('customer.forgotPassword')}}">Forgot password</a>
-                </div>
-                <div>
-                    Already have an account? Login <a href="{{route('customer.login')}}">here</a>
-                </div>
+            @endif
+            <div class="mb-3">
+                <input type="tel" name="phone" class="form-control"
+                       placeholder="Phone number"
+                       value="{{ old('phone') }}">
             </div>
 
 
+            <div class="mb-3">
+                Gender:
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" value="0" checked>
+                    <label class="form-check-label">
+                        Male
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" value="1">
+                    <label class="form-check-label">
+                        Female
+                    </label>
+                </div>
+            </div>
+
+            @if($errors -> has('address'))
+                <div class="">
+                    <span class="text-danger"> {{ $errors -> first('address') }} </span>
+                </div>
+            @endif
+            <div class="mb-3">
+                <input type="text" name="address" class="form-control"
+                       placeholder="Address" required
+                       value="{{ old('address') }}">
+            </div>
+
+            <br>
+            <div class="mb-3 d-flex justify-content-center">
+                <button class="col-md-12 btn px-4 align-content-center"
+                        style="background-color: #2F2FFE; color:white; font-weight: bold">
+                    Sign up
+                </button>
+            </div>
         </form>
+
+        <div class="text-white" style="z-index: 3; width: 120%">
+            <div class="form-text d-flex align-items-center justify-content-between"
+                 style="z-index: 2">
+                <div style="z-index: 2;">
+                    <span class="text-white">Already have an account!</span>
+                    <b><i>
+                            <a class="text-white" href="{{route('customer.login')}}">Login</a>
+                    </i></b>
+                </div>
+            </div>
+        </div>
     </div>
-    @include('layouts/footer')
-</x-layout>
+</section>
 
 
-{{--
-
- <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="first_name" class="form-label">First name</label>
-                    <input type="text" name="first_name" class="form-control" id="first_name"
-                           value="{{old('first_name')}}">
-                    @if($errors->has('first_name'))
-                        {{ $errors->first('first_name') }}
-                    @endif
-                </div>
-
-                <div class=" col-md-6 mb-3">
-                    <label for="last_name" class="form-label">Last name</label>
-                    <input type="text" name="last_name" class="form-control" id="last_name"
-                           value="{{old('last_name')}}">
-                    @if($errors->has('last_name'))
-                        {{ $errors->first('last_name') }}
-                    @endif
-                </div>
-            </div>
-
-            <div class=" row">
-                <div class="col-md-6 mb-3">
-                    <label for="email" class="form-label">Email address</label>
-                    <input type="email" name="email" class="form-control" id="email" value="{{old('email')}}">
-                    @if($errors->has('email'))
-                        {{ $errors->first('email') }}
-                    @endif
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label for="phone_number" class="form-label">Phone number</label>
-                    <input type="text" name="phone_number" class="form-control" id="phone_number"
-                           value="{{old('phone_number')}}">
-                    @if($errors->has('phone_number'))
-                        {{ $errors->first('phone_number') }}
-                    @endif
-                </div>
-            </div>
-
-            <div class=" row">
-                <div class="col-md-6 mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control" id="password"
-                           value="{{old('password')}}">
-                    @if($errors->has('password'))
-                        {{ $errors->first('password') }}
-                    @endif
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label for="password_2" class="form-label">Re-enter password</label>
-                    <input type="password" name="password_2" class="form-control" id="password_2"
-                           value="{{old('password_2')}}">
-                    @if($errors->has('password_2'))
-                        {{ $errors->first('password_2') }}
-                    @endif
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12 mb-3">
-                    <label for="address" class="form-label">Address</label>
-                    <input type="text" name="address" class="form-control" id="address" value="{{old('address')}}">
-                    @if($errors->has('address'))
-                        {{ $errors->first('address') }}
-                    @endif
-                </div>
-            </div>
-
-            <div class="mb-3 d-flex justify-content-center align-items-center">
-                <button class="btn btn-primary rounded-5 px-4">Register</button>
-            </div>
-
-            <div class="form-text d-flex justify-content-between align-items-center">
-                <div class="me-5">
-                    <a href="{{route('customer.forgotPassword')}}">Forgot password</a>
-                </div>
-                <div>
-                    Already have an account? Login <a href="{{route('customer.login')}}">here</a>
-                </div>
-            </div>
-
---}}

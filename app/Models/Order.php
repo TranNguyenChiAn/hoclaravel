@@ -8,12 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+    public $timestamps = false;
 
-    protected $fillable = ['date_buy','status','customer_id','receiver_name','receiver_phone','receiver_address'];
+    protected $primaryKey = 'id';
+    protected $fillable = ['date_buy','status','customer_id','receiver_name','receiver_phone','receiver_address', 'payment_method'];
     protected $table = 'orders';
 
-    public function scopeFilter($query, array $filters)
+    public function order_detail()
     {
+        return $this->belongsTo(OrderDetail::class);
+    }
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class);
+    }
 
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
     }
 }

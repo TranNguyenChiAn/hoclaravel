@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Age;
 use App\Models\Category;
+use App\Models\Customer;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
@@ -125,6 +127,7 @@ class ProductController extends Controller
 //    CART MANAGE
 
     public function showCart(){
+        return view('customer.cart.index');
 
     }
 
@@ -144,7 +147,7 @@ class ProductController extends Controller
 //                them sp vao cart
                 $cart = Arr::add($cart, $product->id, [
                     'image' => $product->image,
-                    'product_name' => $product->product_name,
+                    'name' => $product->name,
                     'price' => $product->price,
                     'quantity' => 1
                 ]);
@@ -154,28 +157,42 @@ class ProductController extends Controller
             $cart = array();
             $cart = Arr::add($cart, $product->id, [
                 'image' => $product->image,
-                'product_name' => $product->product_name,
+                'name' => $product->name,
                 'price' => $product->price,
                 'quantity' => 1
             ]);
         }
 //        nem cart len session
         Session::put(['cart' => $cart]);
+        return Redirect::route('product.cart');
+    }
 
-        return Redirect::route('index');
+    public function updateCart(int $id, Request $request){
+        //        lay cart hien tai
+        $cart = Session::get('cart');
+//        cap nhat so luong
+        $cart[$id]['quantity'] = $request->buy_quantity;
+        //        cap nhat cart moi
+        Session::put(['cart' => $cart]);
+        return Redirect::back();
 
     }
 
+    public function deleteFromCart(Request $request){
+        //        lay cart hien tai
+        $cart = Session::get('cart');
+//        xoa id cua product can xoa
+        Arr::pull($cart, $request->id);
+//        cap nhat cart moi
+        Session::put(['cart' => $cart]);
 
-    public function updateCart(){
-
-    }
-
-    public function deleteFromCart(){
+        return Redirect::back();
 
     }
 
     public function deleteAllFromCart(){
-
+//       xoa cart
+        Session::forget('cart');
+        return Redirect::route('product.cart');
     }
 }

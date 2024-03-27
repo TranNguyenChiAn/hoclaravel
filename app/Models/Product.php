@@ -23,4 +23,9 @@ class Product extends Model
     {
         return $this->belongsTo(Age::class);
     }
+
+    public function order_detail()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }
