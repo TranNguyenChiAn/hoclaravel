@@ -1,6 +1,7 @@
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
 @include('admin/layout/nav')
 
+<title>Manage orders</title>
 <section style="width:80%; margin-left: 240px">
     <br>
     <h1 align="center" style="font-weight: bold;color: #2F2FFE;font-family: Arial;">
@@ -12,6 +13,7 @@
             <th class="t-heading" align="center"> Order ID </th>
             <th class="t-heading" align="center"> Date buy</th>
             <th class="t-heading" align="center"> Customer Name </th>
+            <th class="t-heading" align="center"> Payment Method </th>
             <th class="t-heading" align="center"> Status </th>
             <th class="t-heading" style="text-align: center"> Edit </th>
         </tr>
@@ -26,6 +28,17 @@
             </td>
             <td>
                 {{$order->customer_name}}
+            </td>
+            <td>
+                @if( $order->method_id == 1)
+                    <button class="btn btn-success"> COD </button>
+                @elseif($order->method_id == 2)
+                    <button class="btn btn-warning"> BANKING </button>
+                @elseif($order->method_id == 3)
+                    <button class="btn text-white" style="background-color: #f3209f"> MOMO </button>
+                @elseif($order->method_id == 4)
+                    <button class="btn btn-primary"> VNPAY </button>
+                @endif
             </td>
             <td>
                 @if( $order->status == 0)
@@ -46,7 +59,7 @@
         </tr>
         @endforeach
     </table>
-    <div class="d-flex justify-content-center" style="margin-top: 30px">
+    <div class="d-flex justify-content-center" style="margin-top: 30px;">
         {{ $orders -> links() }}
     </div>
 </section>

@@ -1,4 +1,4 @@
-<?php /** @noinspection PhpMultipleClassDeclarationsInspection */
+<?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
@@ -82,19 +82,19 @@ Route::prefix('/customer_manage')->group(function () {
 
 
 //---------- CUSTOMER -----------
-Route::get('/register', [CustomerController::class, 'register'])->name('customer.register');
-Route::post('/register', [CustomerController::class, 'registerProcess'])
-    ->name('customer.registerProcess');
+Route::prefix('customer') ->group(function () {
+    Route::get('/login', [CustomerController::class, 'login'])->name('customer.login');
+    Route::post('/login', [CustomerController::class, 'loginProcess'])->name('customer.loginProcess');
+
+    Route::get('/register', [CustomerController::class, 'register'])->name('customer.register');
+    Route::post('/register', [CustomerController::class, 'registerProcess'])
+        ->name('customer.registerProcess');
+
+    Route::get('/best_seller',[ProductController::class, 'bestSeller'])-> name('customer.bestSeller');
+    Route::get('/new',[ProductController::class, 'new'])-> name('customer.new');
+    Route::get('/filter/{id}',[ProductController::class, 'filter'])-> name('customer.filter');
 //Route::match (['get', 'post'], '/register', [CustomerController::class, 'register']) -> name('register');
 
-Route::get('/login', [CustomerController::class, 'login'])->name('customer.login');
-Route::post('/login', [CustomerController::class, 'loginProcess'])->name('customer.loginProcess');
-
-Route::get('/logout', [CustomerController::class, 'logout'])->name('customer.logout');
-Route::get('/forgot_password', [CustomerController::class, 'forgotPassword'])
-    ->name('customer.forgotPassword');
-
-Route::prefix('customer') ->group(function () {
     Route::get('/index', [CustomerController::class, 'showProduct'])
         -> name('index');
 
@@ -125,14 +125,18 @@ Route::middleware(CheckLoginCustomer::class)->group(function (){
 
     Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
     Route::post('/checkoutProcess', [OrderController::class, 'checkoutProcess'])->name('checkoutProcess');
-    Route::get('/payment', [OrderController::class, 'payment'])->name('payment');
+    Route::get('/payment', [OrderController::class, 'payment'])->name('payment.index');
+    Route::put('/payment/process', [OrderController::class, 'paymentProcess'])->name('payment.process');
 
     Route::get('/contact', [CustomerController::class, 'contact']) ->name('contact');
+
+    Route::get('/logout', [CustomerController::class, 'logout'])->name('customer.logout');
+    Route::get('/forgot_password', [CustomerController::class, 'forgotPassword'])
+        ->name('customer.forgotPassword');
 });
 
 //---------- END CUSTOMER -----------
 
-Route::get('/sendmail', [MailController::class, 'index']);
 
 
 

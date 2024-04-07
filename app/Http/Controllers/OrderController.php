@@ -78,7 +78,6 @@ class OrderController extends Controller
         $array = Arr::add($array, 'receiver_phone', $request->receiver_phone);
         $array = Arr::add($array, 'receiver_address', $request->receiver_address);
         $array = Arr::add($array, 'customer_id', $customerId);
-        $array = Arr::add($array, 'payment_method', 1);
         Order::create($array);
 
         $maxOrderId = Order::get()
@@ -100,7 +99,7 @@ class OrderController extends Controller
 //        dd($array, $maxOrderId , $orderDetails);
         Session::forget('cart');
 
-        return Redirect::route('payment');
+        return Redirect::route('payment.index');
     }
 
     public function index(Request $request)
@@ -119,7 +118,8 @@ class OrderController extends Controller
 
         $orders = DB::table('orders')
             ->join('customers', 'orders.customer_id', '=', 'customers.id')
-            ->select('orders.*', 'customers.name AS customer_name')
+            ->join('payment_method', 'payment_method.id', '=', 'orders.payment_method')
+            ->select('orders.*', 'customers.name AS customer_name', 'payment_method.id AS method_id', 'payment_method.name AS method_name')
             ->whereIn('customer_id', $customer)
             ->where('customers.name', 'like', '%' . $search . '%')
             ->orderBy('id', 'desc')
@@ -141,6 +141,7 @@ class OrderController extends Controller
         $customer_id = Auth::guard('customer')->id();
         $customer = Customer::find($customer_id);
         $order = Order::with('customer')
+            ->with('payment_method')
             ->where('id','=', $id)
             ->first();
 
@@ -178,6 +179,27 @@ class OrderController extends Controller
             'order' => $order,
             'order_details' => $order_details,
         ]);
-
     }
+     public function paymentProcess (Request $request){
+         $customer_id = Auth::guard('customer')->id();
+
+         $maxOrderId = Order::max('id');
+         $order = Order::with('customer')
+            ->where('customer_id','=', $customer_id)
+            ->where('id', '=', $maxOrderId)
+            ->first();
+
+         $selectPaymentValue = $request->input('payment_method');
+
+         if($selectPaymentValue != null){
+             $array = [];
+             $array = Arr::add($array, 'payment_method', $selectPaymentValue);
+             $order->update($array);
+             return Redirect::route('index')->with('Order successful');
+         }else{
+//             return Redirect::route('payment.index')->with("Please choose 1 payment method");
+             dd($selectPaymentValue);
+         }
+
+     }
 }

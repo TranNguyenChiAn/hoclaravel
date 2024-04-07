@@ -126,6 +126,12 @@ class CustomerController extends Controller
         return redirect()->route('customer.login');
     }
 
+    public function logout(){
+        Auth::guard('customer')->logout();
+        session()->forget('customer');
+        return Redirect::route('customer.login');
+    }
+
     public function profile(){
         //id cua customer dang dang nhap
         $id = Auth::guard('customer')->user()->id;
@@ -166,6 +172,7 @@ class CustomerController extends Controller
     public function updatePassword(){
 
     }
+
 
     public function contact(){
         return view('customer.contact.form');

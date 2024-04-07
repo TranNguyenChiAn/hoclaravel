@@ -6,28 +6,85 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Age;
 use App\Models\Category;
 use App\Models\Customer;
+use App\Models\OrderDetail;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
     //show all products
     public function index()
     {
-
         $categories = Category::all();
         $ages = Age::all();
 
         $products = Product::with('age')
-        ->with('category')
-        ->paginate(5);
+            ->with('category')
+            ->paginate(5)
+            ->withQueryString();
 
         return view('admin.products_manage.index', [
+            'products' => $products,
+            'ages' => $ages,
+            'categories' => $categories
+        ]);
+    }
+
+    public function filter(Request $request, int $id){
+        $categories = Category::all();
+        $ages = Age::all();
+
+        $products = Product::with('age')
+            ->with('category')
+            ->where('category_id', "=", $id)
+            ->paginate(8)
+            ->withQueryString();
+
+        return view('customer.pages.index', [
+            'products' => $products,
+            'ages' => $ages,
+            'categories' => $categories
+        ]);
+    }
+     public function bestSeller(){
+         $categories = Category::all();
+         $ages = Age::all();
+         $order_details = OrderDetail::all();
+
+         $bestSellers = OrderDetail::with('product')
+             ->select('product_id', DB::raw('SUM(quantity) as total_quantity'))
+             ->groupBy('product_id')
+             ->orderByRaw('SUM(quantity) DESC')
+             ->paginate(8)// Lấy 8 sản phẩm bán chạy nhất
+             ->withQueryString();
+
+
+         return view('customer.pages.best_seller', [
+             'bestSellers' => $bestSellers,
+             'ages' => $ages,
+             'categories' => $categories,
+             'order_details' => $order_details
+         ]);
+     }
+
+    public function new(){
+        $categories = Category::all();
+        $ages = Age::all();
+
+        $products = Product::with('age')
+            ->with('category')
+            ->orderBy('id', 'desc')
+            ->paginate(8)
+            ->withQueryString();
+
+        return view('customer.pages.new', [
             'products' => $products,
             'ages' => $ages,
             'categories' => $categories
@@ -48,6 +105,7 @@ class ProductController extends Controller
 
     public function storeProduct(Request $request)
     {
+
         $image = $request->file('image');
         $imageName = $image->getClientOriginalName();
         $image->move(public_path('images'), $imageName);

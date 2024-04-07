@@ -1,6 +1,7 @@
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
 @include('customer/layout/nav')
 
+<title> Checkout </title>
 <style>
     body {
         background-color: #ffffff;
@@ -9,18 +10,18 @@
 </style>
 <title> Receiver </title>
 
-<div class="mx-lg-5">
-    <div class="mx-lg-5 my-lg-5 w-50">
-        <h4 style="color: black; font-weight: bold"> Receiver's Information </h4>
+<div style="margin-left: 36%; margin-top: 30px ">
+    <div class="position-absolute w-50 my-xxl-2">
+        <h4 style="color: black; font-weight: bold; "> Receiver's Information </h4>
         <form method="post" action="{{ route('checkoutProcess') }}"  class="w-50 needs-validation" novalidate>
             @csrf
             @method('post')
             <input class="form-control" type="text" id="receiver_name" placeholder="Name" name="receiver_name"
-                   value="{{ $customer ->name }}" ><br>
+                   value="{{ $customer ->name }}" required><br>
             <input class="form-control" type="number" id="receiver_phone" placeholder="Phone" name="receiver_phone"
-                   value="{{ $customer ->phone }}"><br>
-            <input class="form-control" type="text" id="receiver_address" placeholder="Phone" name="receiver_address"
-                   value="{{ $customer ->address }}"><br>
+                   value="{{ $customer ->phone }}" required><br>
+            <input class="form-control" type="text" id="receiver_address" placeholder="Address" name="receiver_address"
+                   value="{{ $customer ->address }}" required><br>
             <button style="background-color: #2f2ffe; color:white" class="btn float-end" type="submit">
                 Submit
             </button>

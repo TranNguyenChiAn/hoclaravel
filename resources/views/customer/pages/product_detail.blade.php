@@ -1,98 +1,72 @@
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
 @include('customer/layout/nav')
 
-<style>
-    body {
-        background-color: #F5F4F8;
-    }
-    .edit_order {
-        margin-top: 20px;
-        width: 100%;
-        border: 1px solid #d7d2d2;
-        border-radius: 10px;
-        background-color: white;
-        padding: 20px 40px;
-        color: black;
-    }
+<title> Product detail </title>
 
-    .edit_status {
-        position: center;
-        height: 30px;
-        width: 200px;
-        border-radius: 4px;
-        padding-left: 20px;
-    }
-</style>
-<title> Edit Order </title>
-
-<section style="width:80%; margin-left: 240px">
-    <h3 align="center" style="font-family: Inter; font-weight: bolder; color: #2f2ffe; margin-top:30px">
-        EDIT ORDER
+<section style="width:80%; margin-left: 150px; font-family: Inter">
+    <h3 align="center" style="font-weight: bolder;margin-top:30px">
+        PRODUCT DETAIL
     </h3>
-    <div class="edit_order">
-        <div style="display: flex; justify-content: space-between">
-            <div>
-                <h3> Delivery address </h3>
-                Receiver Name: {{ $order->receiver_name }}<br>
-                Receiver Phone: {{ $order->receiver_phone}}<br>
-                Receiver Address:{{ $order->receiver_address}}<br>
-            </div>
-            <div>
-                <form method="post" action="process.php">
-                    <input type="hidden" name="id" value="<= $order['id']; ?>">
-                    <select class="edit_status" name="status">
-                        <option name="status" value="0"> Pending </option>
-                        <option name="status" value="1"> Delivery </option>
-                        <option name="status" value="2"> Completed </option>
-                        <option name="status" value="3"> Canceled </option>
-                    </select>
-                    <button type="submit" class="btn btn-primary">
-                        OK
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="edit_order">
-        <h3> Product </h3><br>
-        <table border="0" cellpadding="0" cellspacing="0" width="100%">
-            @foreach ($order_details as $order_detail)
-                <tr style="margin-top: 20px;">
-                    <td width="280px">
-                        @if ($order_detail->product)
-                            <img style="height: 180px;" class="object-fit-cover"
-                                 src="{{ asset('./images/'. $order_detail->product->image) }}">
-                        @endif
-                    </td>
-                    <td>
-                        <h3>{{ $order_detail->clothe_name }}</h3>
-                        Amount: {{ $order_detail->quantity }}<br>
-                        Price: ${{ $order_detail->price }}
-                    </td>
-                    <td>
-                        <strong>Cost: $
-                            @php
-                                // Tính tổng chi phí của mỗi sản phẩm trong giỏ hàng
-                                $money = $order_detail->price * $order_detail->quantity;
-                                echo $money;
-                            @endphp
-                        </strong>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <p></p>
-                    </td>
-                </tr>
-            @endforeach
-        </table>
-    </div>
-    <div class="total_cost edit_order" style="display: flex; justify-content: space-between; color: firebrick">
-        <h3> Total </h3>
-        <h3>
+    <table style="margin-top: 60px;" class="table table-borderless">
+        <tr>
+            <td width="480px" rowspan="4" align="center">
+                @if($product->quantity < 9 and $product->quantity  > 0)
+                    <img class="position-absolute" style="width: 90px; margin: -50px 0 0 -50px" src="{{ asset('./icons/out_of_stock.png')}}">
+                @elseif($product->quantity == 0)
+                    <img class="position-absolute m-lg-5 p-lg-5" style="z-index: 3" src="{{ asset('./icons/sold_out.png')}}">
+                @endif
+                <img src="{{ asset('./images/' . $product -> image ) }}" width="450px" height="auto">
 
-        </h3>
-    </div>
+            </td>
+            <td style="vertical-align: top; color: black"  colspan="3">
+                <h2 class="">
+                    <b>{{ $product -> name }}</b>
+                </h2>
+                <h5 class="text-danger">
+                    <b>${{$product -> price}}</b>
+                </h5>
+                <p>Category: {{$product -> category -> name}}</p>
+                <p>Age: {{$product -> age ->name}}+</p>
+                <p>Size: {{$product -> size}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="margin-bottom: 0">
+                <p>Pieces: {{$product -> pieces}}</p>
+            </td>
+            <td style="margin-bottom: 0">
+                <p>Insiders points: {{$product -> insiders_points}}</p>
+            </td>
+            <td style="margin-bottom: 0">
+                <p>Items: {{$product -> items}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <p>Description: {{$product -> description}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button class="btn float-start" style="background-color: #2f2ffe">
+                    <a class="nav-link text-white" href="{{ route('index') }}">
+                        Back
+                    </a>
+                </button>
+            </td>
+            <td style="vertical-align: middle">
+
+                @if($product->quantity > 0 )
+
+                <button class="btn float-end" style="background-color: #2f2ffe">
+                    <a class="nav-link text-white" href="{{ route('product.addToCart', $product->id) }}">
+                        Add to cart
+                    </a>
+                </button>
+                @endif
+            </td>
+        </tr>
+    </table>
     <br>
 </section>
 

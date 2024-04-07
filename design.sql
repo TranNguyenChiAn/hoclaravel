@@ -1,7 +1,6 @@
 create database lego_store;
 use lego_store;
 
-
 create table admins(
 	id INT auto_increment,
     name VARCHAR(100) NOT NULL,
@@ -111,12 +110,8 @@ alter table orders add foreign key (payment_method) references payment_method(id
 
 insert into orders(date_buy, customer_id, admin_id, status, payment_method) values ('03-09-2024', 2, 1, 1, 1);
 
-
+alter table orders change payment_method payment_method INT;
 select * from orders;
-
-delete from orders;
-
-
 
 create table order_details(
 	product_id INT,
@@ -130,11 +125,13 @@ alter table order_details add foreign key (order_id) references orders(id) on de
     
 use design;
 SELECT * FROM order_details;
+SELECT * FROM orders;
 SELECT * FROM products;
 
 insert into payment_method(name) values ('cash'), ('online');
 
 SET SQL_SAFE_UPDATES = 0;
+update orders set payment_method = 3 where id = 31;
 
 SELECT order_details.order_id,
 		clothes.image, clothes.name, clothes.description,
@@ -143,8 +140,6 @@ SELECT order_details.order_id,
 FROM order_details
 INNER JOIN products ON products.id = order_details.products_id
 INNER JOIN orders  ON orders.id = order_details.order_id;
-
-use design;
 
 select * from customers;
 select * from admins;
@@ -155,6 +150,7 @@ select * from orders;
 select * from order_details;
 select * from payment_method;
 
+update orders set payment_method = 3 where id > 37 and id < 45;
 
 
 SELECT sum(order_details.quantity) as quantity, orders.date_buy

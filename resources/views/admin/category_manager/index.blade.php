@@ -1,6 +1,7 @@
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
 @include('admin/layout/nav')
 
+<title> Manage categories </title>
 <section style="width:80%; margin-left: 224px">
     <br>
     <h1 align="center" style="font-weight: bold;color: #2f2ffe;font-family: Arial">

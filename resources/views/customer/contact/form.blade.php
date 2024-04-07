@@ -22,17 +22,20 @@
 <section>
     <div class="row w-100">
         <div class="col-md-6">
-            <form class="form-control p-4" method="post" action="#" style="width: 100%">
+            <form class="form-control p-4" method="get" action="{{ route('index')}}" style="width: 100%">
                 <h3 align="center" style="font-weight: bold;color: #2f2ffe;font-family: Inter">
                     Contact Us
                 </h3>
                 <div style="margin: 20px 0 0 110px;" >
                     Name<br>
-                    <input class="form-control rounded-5" type="text" name="name" placeholder="Name" alt="name"><br><br>
+                    <input class="form-control rounded-5" type="text" name="name" placeholder="Name"
+                           alt="name" required><br><br>
                     Email<br>
-                    <input class="form-control rounded-5" type="email" name="email" placeholder="Email" alt="email"><br><br>
+                    <input class="form-control rounded-5" type="email" name="email" placeholder="Email"
+                           alt="email" required><br><br>
                     Message<br>
-                    <input class="form-control rounded-5" type="textarea" name="message" placeholder="Message" alt="message"><br>
+                    <textarea class="form-control rounded-1" type="text" name="message"
+                              placeholder="Message" required></textarea><br>
                     <button type="submit" class="contact_submit_button rounded-5">
                         CONTACT US
                     </button>

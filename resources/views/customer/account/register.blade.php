@@ -1,6 +1,7 @@
 <title>Customer Register</title>
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
 
+<title> Register </title>
 <section style="font-family: Inter">
     <img height="100%" width="100%" class="float-end top-0 position-absolute object-fit-cover"
          src="{{ asset('./images/login_bg.png')}}">

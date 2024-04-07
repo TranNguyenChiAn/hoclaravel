@@ -59,6 +59,11 @@
                     Change password
                 </a>
             </div>
+            <div class="history_order">
+                <a style="font-weight: bold;" class="nav-link" href="{{ route('customer.logout') }}">
+                    Logout
+                </a>
+            </div>
         </div>
     </div>
 </section>

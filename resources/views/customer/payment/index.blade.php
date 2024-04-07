@@ -108,48 +108,45 @@
         </div>
     </div>
     <div class="payment">
-            <table border="0" cellspacing="0" cellpadding="0" width="100%">
-                <tr>
-                    <th class="d-flex justify-content-center"> Payment Method </th>
-                </tr>
-
+        <form class="d-block" id="paymentForm" method="POST" action="{{ route('payment.process') }}">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="payment_method" id="payment_method">
+        <table cellpadding="6px" style="background-color: #ffffff" width="100%">
+            <tr>
+                <th class="d-flex justify-content-center"> Payment Method </th>
+            </tr>
             <tr>
                 <td>
-                    <form class="" method="POST" enctype="application/x-www-form-urlencoded">
-                        <button type="submit" name="cash" style="background-color: #2c8c6b; margin-top:10px" class="payment_button">
-                            <a class="link_in_button">
-                                Pay with cash
-                            </a>
-                        </button>
-                    </form>
+                    <button type="submit" name="payment_method" style="border-radius: 0; width:100%" class="btn btn-success px-4" value="1">
+                        Pay with cash
+                    </button>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <form class="" method="POST" enctype="application/x-www-form-urlencoded"
-                           action="momo.php">
-                        <input type="hidden" name="total_cost" value="">
-                        <input type="hidden" name="order_id" value="">
-                        <button type="submit" name="momo" style="background-color: #f3209f" class="payment_button">
-                            Momo
-                        </button>
-                    </form>
+                    <button type="submit" name="payment_method" style="border-radius: 0; width:100%" class="btn btn-warning px-4" value="2">
+
+                        Banking
+                    </button>
                 </td>
             </tr>
             <tr>
-                    <td>
-                        <form class="" method="POST" enctype="application/x-www-form-urlencoded"
-                              action="vnpay.php">
-                            <input type="hidden" name="total_cost" value="">
-                            <input type="hidden" name="order_id" value="">
-                            <button type="submit" name="redirect" style="background-color: #005BAA" class="payment_button">
-                                Pay with VnPay
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-
+                <td>
+                    <button type="submit" name="payment_method" style="background-color: #f3209f" class="payment_button" value="3">
+                        Pay with Momo
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit" name="payment_method" style="border-radius: 0; width:100%" class="btn btn-primary px-4" value="4">
+                        Pay with VnPay
+                    </button>
+                </td>
+            </tr>
         </table>
+        </form>
     <br>
     </div>
 </section>

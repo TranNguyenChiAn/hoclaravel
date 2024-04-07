@@ -1,10 +1,12 @@
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
 @include('admin/layout/nav')
 
+<title>Edit order</title>
     <style>
         body {
             margin-top:-30px;
             background-color: #F5F4F8;
+            font-family: Inter;
         }
         .edit_order {
             margin-top: 20px;
@@ -26,7 +28,7 @@
     </style>
     <title> Edit Order </title>
 
-<section style="width:80%; margin-left: 240px">
+<section style="width:80%; margin-left: 240px"><br>
     <h3 align="center" style="font-family: Inter; font-weight: bolder; color: #2f2ffe; margin-top:30px">
         EDIT ORDER #{{$order->id}}
     </h3>
@@ -116,8 +118,12 @@
         </table>
     </div>
     <div class="total_cost edit_order" style="display: flex; justify-content: space-between; color: firebrick">
-        <h3> Total </h3>
-        <h3> {{ $total}} </h3>
+        <h3>
+            <b> Total </b>
+        </h3>
+        <h3>
+            <b>${{ $total}}</b>
+        </h3>
     </div>
     <br>
 </section>

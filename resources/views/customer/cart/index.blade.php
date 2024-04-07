@@ -10,6 +10,14 @@
 
 <section align="center" class="py-5">
     <h1 align="center" style="margin: 10px 0 50px 0; color: black"> My Shopping Cart</h1>
+    @php
+        //kiem tra xem cart co ton tai ko
+        $cartCheck = \Illuminate\Support\Facades\Session::get('cart');
+    @endphp
+
+    {{--        BODY --}}
+    {{--     neu ton tai CART--}}
+    @if($cartCheck != null)
         <table class="table" style="width: 81%; margin-left: 10%" border="0">
             <tr style="text-align: center; height: 40px; border-bottom: 1px solid black">
                 <th style="text-align: center; width: 130px"> Image</th>
@@ -19,15 +27,6 @@
                 <th style="text-align: center; width: 100px"> Count </th>
                 <th style="text-align: center; width: 100px"> Remove </th>
             </tr>
-
-            @php
-                //kiem tra xem cart co ton tai ko
-                $cartCheck = \Illuminate\Support\Facades\Session::get('cart');
-            @endphp
-
-            {{--        BODY --}}
-            {{--     neu ton tai CART--}}
-            @if($cartCheck != null)
             @foreach(Session::get('cart') as $product_id => $product)
 
             <form action="{{route('product.updateCart', $product_id)}}">
@@ -77,13 +76,6 @@
                     </p>
                 </td>
             </tr>
-            @else()
-                <tr>
-                    <td style="text-align: center" colspan="7">
-                        <h3> Your cart is empty. </h3>
-                    </td>
-                </tr>
-            @endif
         </table>
     </form>
     <div class="mx-lg-5 px-4">
@@ -92,8 +84,6 @@
             <button style="border-radius: 0; background-color: #2f2ffe" class="btn ">
                 <a class="nav-link text-white" href="{{route('index')}}">Product List</a>
             </button>
-
-
             <button style="border-radius: 0" class="btn border-dark">
                 <a class="nav-link text-danger" href="{{route('product.deleteAllFromCart')}}"> Delete cart </a>
             </button>
@@ -104,6 +94,23 @@
             </button>
         </div>
     </div>
+    @else()
+        <table class="table table-borderless" border="1">
+            <tr>
+                <td style="text-align: center;">
+                    <h1><strong> Your cart is empty. </strong></h1>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center">
+                    <button style="background-color: #2f2ffe" class="btn px-3">
+                        <a class="nav-link text-white" href="{{route('index')}}">Product List</a>
+                    </button>
+                </td>
+
+            </tr>
+        </table>
+    @endif
 </section>
 <script src="{{asset('frontend/js/cart.js')}}"></script>
 

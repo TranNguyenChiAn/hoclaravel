@@ -1,12 +1,13 @@
 <title>Login</title>
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
 
+<title> Login </title>
 <section style="font-family: Arial">
     <img height="100%" width="100%" class="float-end top-0 position-absolute object-fit-cover"
          src="{{ asset('./images/login_bg.png')}}">
     <div class="position-absolute top-50 start-50 translate-middle-y">
         <form method="post" action="{{ route('customer.loginProcess') }}"
-              class="form-control rounded-4 text-white "
+              class="form-control rounded-4 text-white"
               style="z-index: 3; background-color: #525050;
                 width: 120%;border: none; padding:10px 80px">
             @csrf
@@ -58,4 +59,3 @@
         </div>
     </div>
 </section>
-

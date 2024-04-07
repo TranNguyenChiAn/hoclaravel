@@ -1,6 +1,7 @@
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
 @include('admin/layout/nav')
 
+<title> Edit product </title>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script type="text/javascript">
     function chooseFile() {
@@ -21,9 +22,12 @@
 </script>
 
 <section style="width:80%; margin-left: 240px">
+    <br>
+    <h1 align="center" style="font-weight: bold;color: #2F2FFE;font-family: Inter">
+        Edit product
+    </h1>
     <div class="row g-3">
-        <figure align="center" style="font-weight: bold; font-size: 30px;color: #4d4b4b;"> Edit product </figure>
-        <form class="row g-3 bg-white" style="padding: 24px 42px"
+        <form class="row g-3 bg-white" style="padding: 18px 42px"
               method="POST" action="{{route('product.update', $product)}}"
               enctype="multipart/form-data">
             @method('PUT')

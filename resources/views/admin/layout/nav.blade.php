@@ -2,6 +2,7 @@
     <style>
         body {
             margin:0;
+            font-family: Inter;
         }
         .navbar {
             position: fixed;

@@ -1,6 +1,7 @@
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
 @include('admin/layout/nav')
 
+<title> Edit customer </title>
 <section style="margin-left: 224px">
     <div>
         <figure align="center" style="font-weight: bold; font-size: 30px;color: #4d4b4b;"> UPDATE </figure>

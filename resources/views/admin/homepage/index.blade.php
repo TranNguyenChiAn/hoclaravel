@@ -1,6 +1,7 @@
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
 @include('admin/layout/nav')
 
+<title> Hompage admin </title>
 <section style="margin: 0 0 0 224px">
     <p style="margin-top: 18px" class="table_title"> STATISTICS </p>
     <!--<iframe id="notice" src="statistic/today.blade.php" ></iframe>-->

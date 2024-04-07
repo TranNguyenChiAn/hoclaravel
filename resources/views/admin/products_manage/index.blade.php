@@ -1,6 +1,7 @@
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
 @include('admin/layout/nav')
 
+<title> Manage products </title>
 <section style="width:80%; margin-left: 224px">
     <!-- LIST -->
     <br>
