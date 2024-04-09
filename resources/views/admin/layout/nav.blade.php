@@ -56,7 +56,7 @@
             </li>
             <li class="choice">
                 <img style="width:16px; margin-top: -3px" src="{{asset('./icons/statistic.png' )}}">
-                <a class="link_in_menu" href="../homepage/index.blade.php"> Statistics </a>
+                <a class="link_in_menu" href="{{ route('statistic.index') }}"> Statistics </a>
             </li>
             <li  class="choice">
                 <img style="width:16px; margin-top: -3px" src="{{asset('./icons/package.png')}}">
@@ -76,7 +76,7 @@
             </li>
             <li  class="choice">
                 <img style="width:16px; margin-top: -3px" src="{{asset('./icons/log-out.png')}}">
-                <a class="link_in_menu" href="account.logout"> Logout </a>
+                <a class="link_in_menu" href="{{route('admin.logout')}}"> Logout </a>
             </li>
         </ul>
     </div>

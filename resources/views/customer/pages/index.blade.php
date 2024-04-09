@@ -3,6 +3,15 @@
 
 <title>Product List </title>
 <section class="p-4" style="font-family: Inter">
+    {{--    SEARCH  --}}
+    <form method="get" action="{{ route('index') }}" class="float-end" role="search">
+        @csrf
+        <input class="form-control rounded-5 p-2 px-3" name="search" type="text" aria-label="Search"
+               placeholder="Type to search...">
+    </form>
+    <br><br><br><br>
+    {{--    END SEARCH  --}}
+
     <!-------------------- PRODUCT LIST -------------------->
     <div>
         <div class="row g-3">

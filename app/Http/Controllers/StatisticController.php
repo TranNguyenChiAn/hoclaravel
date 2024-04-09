@@ -2,21 +2,57 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class StatisticController extends Controller
 {
-    public function showSalesDaily (){
+    public function index(){
+        return view('admin.statistic.index');
+    }
+    //
 
-        $order_details = DB::table('order_details')
-            ->join('orders', 'order_details.order_id','=', 'orders.id')
-            ->select('order_details.quantity', 'orders.date_buy')
-            ->get();
+    public function sales( Request $request){
+        //Lấy giá trị được search về với điều kiện $_GET['search'] tồn tại
+        if($request->input('month') != null) {
+            $month = $request->input('month');
+            //Query để lấy dữ liệu từ bảng classes trên db về
+            $result = OrderDetail::selectRaw('SUM(quantity) as total_sales')
+                ->with(['order' => function ($query) {
+                    $query->select('date_buy');
+                }])->select('id')
+                ->where('date_buy', 'LIKE', $month)
+                ->groupBY('date_buy')
+                ->withQueryString();
+        }else{
 
-        return view('admin.homepage.statistic.sales', [
-            'order_details' => $order_details
-        ]);
+            $result = OrderDetail::selectRaw('SUM(quantity) as total_sales')
+                ->with(['order' => function ($query) {
+                    $query->select('date_buy');
+                }])->select('id')
+                ->groupBY('date_buy')
+                ->withQueryString();
+        }
+
+        $amount[] = $result['quantity'];
+        $date_buy[] = $result['date_buy'];
+
+        return view('admin.statistic.sales', compact('amount', 'date_buy'));
+    }
+
+    public function sales_monthly(){
+
+    }
+
+    public function sales_yearly(){
+
+    }
+
+    public function product(){
+
+    }
+
+    public function today(){
 
     }
 }

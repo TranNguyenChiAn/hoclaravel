@@ -27,19 +27,27 @@ class CustomerController extends Controller
         ]);
     }
 
-    public function showProduct()
+    public function showProduct( Request $request)
     {
+        $search = "";
+        if ($request->search != null) {
+            $search = $request->search;
+        }
+
         $categories = Category::all();
         $ages = Age::all();
 
         $products = Product::with('age')
             ->with('category')
-            ->paginate(8);
+            ->where('name', 'like', '%'.$search . '%')
+            ->paginate(8)
+            ->withQueryString();;
 
         return view('customer.pages.index', [
             'products' => $products,
             'ages' => $ages,
-            'categories' => $categories
+            'categories' => $categories,
+            'search' => $search
         ]);
     }
 

@@ -53,7 +53,12 @@ class ProductController extends Controller
             'categories' => $categories
         ]);
     }
-     public function bestSeller(){
+     public function bestSeller(Request $request){
+         $search = "";
+         if ($request->search != null) {
+             $search = $request->search;
+         }
+
          $categories = Category::all();
          $ages = Age::all();
          $order_details = OrderDetail::all();
@@ -62,6 +67,7 @@ class ProductController extends Controller
              ->select('product_id', DB::raw('SUM(quantity) as total_quantity'))
              ->groupBy('product_id')
              ->orderByRaw('SUM(quantity) DESC')
+             ->where('name', 'like', '%'.$search . '%')
              ->paginate(8)// Lấy 8 sản phẩm bán chạy nhất
              ->withQueryString();
 
@@ -74,13 +80,19 @@ class ProductController extends Controller
          ]);
      }
 
-    public function new(){
+    public function new(Request $request){
+        $search = "";
+        if ($request->search != null) {
+            $search = $request->search;
+        }
+
         $categories = Category::all();
         $ages = Age::all();
 
         $products = Product::with('age')
             ->with('category')
             ->orderBy('id', 'desc')
+            ->where('name', 'like', '%'.$search . '%')
             ->paginate(8)
             ->withQueryString();
 
