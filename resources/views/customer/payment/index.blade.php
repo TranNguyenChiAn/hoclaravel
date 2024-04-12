@@ -16,6 +16,7 @@
 
          body {
              background-color: #F5F4F8;
+             font-family: Inter;
          }
         .order_detail {
             margin: 10px 10px 0 3%;
@@ -66,7 +67,7 @@
                             <img width="120px" src="{{ asset('./images/'.$order_detail->product->image)}}">
                         </td>
                         <td style="padding-left: 18px; width: 300px ">
-                            <h3>{{$order->product->name ?? 'Product Not Found' }}</h3>
+                            <h4>{{$order_detail->product->name }}</h4>
                             Amount: {{$order_detail->quantity}}<br>
                             Price: ${{$order_detail->price}}<br>
                         </td>

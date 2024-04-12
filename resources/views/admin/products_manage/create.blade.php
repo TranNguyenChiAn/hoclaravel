@@ -45,6 +45,7 @@
             <div class="col-md-3">
                 <label class="form-label">Category</label>
                 <select class="form-select" name="category_id" required>
+                    <option disabled selected> -- Choose -- </option>
                     @foreach($categories as $category)
                         <option value="{{ $category->id}}" value="{{old('name')}}">
                             {{$category->name}}
@@ -55,6 +56,7 @@
             <div class="col-md-3">
                 <label  class="form-label">Age range</label>
                 <select class="form-select" name="age_id" required>
+                    <option disabled selected> -- Choose -- </option>
                     @foreach($ages as $age)
                         <option value="{{ $age->id }}">{{$age->name}}+</option>
                     @endforeach
@@ -83,7 +85,7 @@
             <div class="col-md-6">
                 <br>
                 <label class="form-label"> Image:</label>
-                <input type="file" name="image" id="imageFile"
+                <input type="file" class="form-control" name="image" id="imageFile"
                        accept="image/*" onchange="chooseFile(this)" required>
 
                 <style>

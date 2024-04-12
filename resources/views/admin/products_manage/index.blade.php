@@ -10,7 +10,7 @@
     </h1>
     <br>
 
-    <table class="table table-hover">
+    <table class="table table-hover" style="font-size: 12px">
         <tr>
             <th> ID </th>
             <th> Name </th>
@@ -56,7 +56,7 @@
                 </td>
                 <td>
                     <a href="{{ route('product.edit', $product) }}">
-                        <i class="bi bi-magic"></i>
+                        <i class="bi bi-magic link-dark"></i>
                     </a>
                 </td>
                 <td>
@@ -70,15 +70,15 @@
         @endforeach
     </table>
 
-    <div class="d-flex justify-content-center">
-        {{ $products->links() }}
-        <br>
+    <div class="d-flex justify-content-between">
+        <div></div>
+        <div class="d-flex ">
+            {{ $products->links() }}
+            <br>
+        </div>
+
+        <button class="btn btn-primary m-3 translate-middle-y">
+            <a class="nav-link" href="{{route('product.create')}}"> + Add a record </a>
+        </button>
     </div>
-
-    <button class="btn btn-primary float-end translate-middle-y">
-        <a class="nav-link" href="{{route('product.create')}}"> + Add a record </a>
-    </button>
-
-
-    <!--FOOTER-->
 </section>

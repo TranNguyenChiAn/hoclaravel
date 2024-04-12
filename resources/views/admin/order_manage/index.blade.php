@@ -53,7 +53,7 @@
             </td>
             <td align="center">
                 <a href="{{ route('order.edit', $order->id) }}">
-                    <i class="bi bi-magic"></i>
+                    <i class="bi bi-magic link-dark"></i>
                 </a>
             </td>
         </tr>

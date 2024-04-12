@@ -2,7 +2,7 @@
 @include('customer/layout/nav')
     <style>
         body {
-            background-color: #F5F4F8;
+            background-color: #ffffff;
         }
 
         .contact_submit_button {
@@ -19,10 +19,10 @@
     </style>
     <title> Contact </title>
 
-<section>
+<section class="mb-3">
     <div class="row w-100">
         <div class="col-md-6">
-            <form class="form-control p-4" method="get" action="{{ route('index')}}" style="width: 100%">
+            <form class="form-control bg-white border-0 p-lg-5" method="get" action="{{ route('index')}}" style="width: 100%">
                 <h3 align="center" style="font-weight: bold;color: #2f2ffe;font-family: Inter">
                     Contact Us
                 </h3>
@@ -46,7 +46,8 @@
                 </div>
             </form>
         </div>
-        <img class="col-md-6 px-lg-5 object-fit-cover py-3" style="height: 500px; " src="{{asset('./icons/bg_contact.jpg')}}">
+        <img class="col-md-6 px-lg-5 my-4 object-fit-cover py-3" style="height: 500px; "
+             src="{{asset('./icons/bg_contact.jpg')}}">
     </div>
 </section>
 

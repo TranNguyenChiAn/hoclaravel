@@ -50,6 +50,11 @@
                             <a class="text-white" href="{{route('admin.register')}}">Register</a>
                         </i></b>
                 </div>
+                <div style="z-index: 2">
+                    <b><i>
+                            <a class="text-white">Forgot password</a>
+                        </i></b>
+                </div>
             </div>
         </div>
     </div>

@@ -148,9 +148,11 @@ select * from brands;
 select * from categories;
 select * from orders;
 select * from order_details;
+
+delete from orders where id = 49;
 select * from payment_method;
 
-update orders set payment_method = 3 where id > 37 and id < 45;
+update orders set payment_method = 2 where id > 51;
 
 
 SELECT sum(order_details.quantity) as quantity, orders.date_buy

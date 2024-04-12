@@ -123,7 +123,7 @@ class OrderController extends Controller
             ->whereIn('customer_id', $customer)
             ->where('customers.name', 'like', '%' . $search . '%')
             ->orderBy('id', 'desc')
-            ->paginate(6)
+            ->paginate(8)
             ->withQueryString();
 
 

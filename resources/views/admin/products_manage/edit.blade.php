@@ -66,7 +66,7 @@
             <div class="col-md-3">
                 <label for="inputCategory" class="form-label">Category</label>
                 <select id="inputCategory" class="form-select" name="category_id">
-                    <option selected>Choose...</option>
+                    <option disabled selected> -- Choose -- </option>
                     @foreach($categories as $category)
                         <option value="<?= $category->id ?>"
                             @if($product->category_id == $category->id)
@@ -80,13 +80,13 @@
             <div class="col-md-3">
                 <label class="form-label">Age</label>
                 <select class="form-select" name="age_id">
-                    <option selected>Choose...</option>
+                    <option disabled selected> -- Choose -- </option>
                     @foreach($ages as $age)
                         <option value="<?= $age->id ?>"
                         @if($product->age_id == $age->id)
                             {{ 'selected' }}
                             @endif>
-                            {{$age->name}}
+                            {{$age->name}}+
                         </option>
                     @endforeach
                 </select>
@@ -105,7 +105,7 @@
             </div>
             <div class="col-md-6">
                 <label class="form-label"> Image:</label>
-                <input type="file" name="image" id="imageFile"
+                <input type="file" class="form-control" name="image" id="imageFile"
                        accept="image/*" onchange="chooseFile(this)">
                 <style>
                     #imageUpload img {

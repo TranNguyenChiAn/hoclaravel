@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Http\Middleware\Authenticate;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
@@ -12,8 +11,9 @@ class Admin extends Authenticatable
 {
     use HasFactory;
     public $timestamps = false;
-    protected $fillable = ['name','email','password'];
+    protected $primaryKey = 'id';
     protected $table = 'admins';
+    protected $fillable = ['name','email','password'];
 
     public function setPasswordAttributes($password)
     {

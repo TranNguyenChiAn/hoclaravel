@@ -2,6 +2,7 @@
 @include('admin/layout/nav')
 
 <title> Update category </title>
+<br>
 <h1 align="center" style="font-weight: bold;font-family: Arial; color: #2f2ffe;"> UPDATE CATEGORY </h1>
 
 <section style="margin:60px 3% auto 20%">
@@ -26,8 +27,8 @@
                        placeholder="Category name" value="{{ $category->name}}">
             </div>
             <br>
-            <button class="btn btn-primary float-end " type="submit"
-                    style=" font-size: 22px">
+            <button class="btn float-end text-white" type="submit"
+                    style=" font-size: 20px; background-color: #2f2ffe">
                 Update
             </button>
         </form>

@@ -13,16 +13,6 @@ use App\Http\Middleware\CheckLoginCustomer;
 use App\Http\Middleware\CheckLoginAdmin;
 use App\Http\Controllers\StatisticController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::get('/', [CustomerController::class,'showProduct']) -> name('home');
 
@@ -57,11 +47,11 @@ Route::middleware(CheckLoginAdmin::class)->group(function () {
             ->name('order.update');
 
         Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
-
+        //MANAGE ACCOUNT ADMIN
+        Route::get('/admin', [AdminController::class, 'show']) -> name('admin');
     });
 });
-//MANAGE ACCOUNT ADMIN
-Route::get('/admin', [AdminController::class, 'show']) -> name('admin');
+
 
 //CATEGORY MANAGER
 Route::middleware(CheckLoginAdmin::class)->group(function () {

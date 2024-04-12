@@ -39,7 +39,7 @@
 
 <section style="width:80%; margin-left: 12%" class="my-lg-3">
         <h3 align="center" style="font-family: Inter; font-weight: bolder; color: #2f2ffe; margin-top:30px">
-            EDIT ORDER
+            DETAIL HISTORY ORDER
         </h3>
         <div class="edit_order" >
             <div style="display: flex; justify-content: space-between">
@@ -49,17 +49,31 @@
                     Receiver Phone: {{ $order->receiver_phone}}<br>
                     Receiver Address:{{ $order->receiver_address}}<br>
                 </div>
-                <div>
-                    @if( $order->status = 1)
-                        <button class="btn btn-warning"> Pending </button>
-                    @elseif($order->status = 2)
-                        <button class="btn btn-primary"> Delivery </button>
-                    @elseif($order->status = 3)
-                        <button class="btn btn-success"> Completed </button>
-                    @elseif($order->status = 4)
-                        <button class="btn btn-danger"> Canceled </button>
-                    @endif
+                <div class="d-flex">
+                    <div class="mx-3">
+                        @if( $order->status = 1)
+                            <button class="btn btn-warning"> Pending </button>
+                        @elseif($order->status = 2)
+                            <button class="btn btn-primary"> Delivery </button>
+                        @elseif($order->status = 3)
+                            <button class="btn btn-success"> Completed </button>
+                        @elseif($order->status = 4)
+                            <button class="btn btn-danger"> Canceled </button>
+                        @endif
+                    </div>
+                    <div>
+                        @if( $order->payment_method == 1)
+                            <button class="btn btn-success"> COD </button>
+                        @elseif($order->payment_method  == 2)
+                            <button class="btn btn-warning"> BANKING </button>
+                        @elseif($order->payment_method  == 3)
+                            <button class="btn text-white" style="background-color: #f3209f"> MOMO </button>
+                        @elseif($order->payment_method  == 4)
+                            <button class="btn btn-primary"> VNPAY </button>
+                        @endif
+                    </div>
                 </div>
+
             </div>
         </div>
         <div class="edit_order">
@@ -86,7 +100,6 @@
                                     $total = 0;
                                     $total += $money;
                                     echo $money;
-
                                 @endphp
                             </strong>
                         </td>
@@ -95,18 +108,20 @@
             </table>
         </div>
         <div class="total_cost edit_order" style="display: flex; justify-content: space-between; color: firebrick">
-            <h3> Total </h3>
-            <h3>
+            <h3><b></b> Total </h3></h3>
+            <h3><b>
                 ${{$total}}
-            </h3>
+            </b></h3>
         </div>
         <br>
     <div>
-        <button class="btn btn-danger w-100">
-            <a class="nav-link">
-                Cancel
-            </a>
-        </button>
+        @if($order->status = 1)
+            <button class="btn btn-danger w-100">
+                <a class="nav-link">
+                    Cancel
+                </a>
+            </button>
+        @endif
         <div id="confirm_cancel" class="confirm_cancel">
             <span style="margin: 60px 0 0 48px;font-size: 24px; font-weight: bold"> Are you sure you want to cancel?</span><br>
             <br>
@@ -116,7 +131,7 @@
                 </a>
             </button>
 
-            @if($order->status = 0)
+            @if($order->status = 1)
                 <button style="margin:60px 0 0 160px;" id="cancel" class="btn btn-danger">
                     <a style="color: white" class="link" href="cancel.php?id=<?= $order['id']; ?>">
                     Sure
@@ -125,7 +140,7 @@
             @endif
         </div>
 
-        <script language="javascript">
+        <script>
             document.getElementById("cancel").onclick = function() {
                 document.getElementById("confirm_cancel").style.display = "block"
                 document.body.style.filter = 'blur'

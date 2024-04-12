@@ -8,8 +8,10 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+use function Laravel\Prompts\password;
 
 class AdminController extends Controller
 {
@@ -17,7 +19,6 @@ class AdminController extends Controller
         $admin = DB::table('admins')
             ->select('admins.*')
             ->get();
-
 
         return view('admin.account.index', [
             'admin' => $admin
@@ -46,13 +47,13 @@ class AdminController extends Controller
 
         if(Auth::guard('admin')->attempt($loginInfor)){
 
-            //Lấy thông tin của customer đang login
-            $customer = Auth::guard('admin')->user();
+            //Lấy thông tin của admin đang login
+            $admin = Auth::guard('admin')->user();
             //Cho login
-            Auth::guard('admin')->login($customer);
-            //Ném thông tin customer đăng nhập lên session
-            session(['admin' => $customer]);
-//            $request->session()->regenerate();
+            Auth::guard('admin')->login($admin);
+            //Ném thông tin admin đăng nhập lên session
+            session(['admin' => $admin]);
+            //  $request->session()->regenerate();
             return redirect()->route('product.index');
         }
         return redirect()->back()->withErrors($validator)->withInput();
