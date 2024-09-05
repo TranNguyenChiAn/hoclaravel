@@ -13,7 +13,7 @@
         "laravel-vite-plugin": "^1.0.0",
         "sass": "^1.56.1",
         "vite": "^5.0.0"
-    }
+    },
   "scripts": {
     "build": "[my-framework] build --output public"
     }
