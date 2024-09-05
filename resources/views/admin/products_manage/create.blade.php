@@ -62,21 +62,16 @@
                     @endforeach
                 </select>
             </div>
-
-            </select><br>
-
             <div class="col-md-3">
                 <label class="form-label">Price</label>
                 <input type="text" class="form-control" name="price"
                        placeholder="Product price" value="{{old('price')}}" required>
             </div>
-
             <div class="col-md-3">
                 <label class="form-label">Quantity</label>
                 <input type="text" class="form-control" name="quantity"
                        placeholder="Product quantity" value="{{old('quantity')}}" required>
             </div>
-
             @if($errors -> has('image'))
                 <div class="col-md-6">
                     <span class="text-danger"> {{ $errors -> first('image') }} </span>

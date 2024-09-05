@@ -62,12 +62,13 @@ class ProductController extends Controller
          $categories = Category::all();
          $ages = Age::all();
          $order_details = OrderDetail::all();
+         $product = Product::all();
 
          $bestSellers = OrderDetail::with('product')
              ->select('product_id', DB::raw('SUM(quantity) as total_quantity'))
              ->groupBy('product_id')
              ->orderByRaw('SUM(quantity) DESC')
-             ->where('name', 'like', '%'.$search . '%')
+//             ->where('name', 'like', '%'.$search . '%')
              ->paginate(8)// Lấy 8 sản phẩm bán chạy nhất
              ->withQueryString();
 
@@ -92,7 +93,7 @@ class ProductController extends Controller
         $products = Product::with('age')
             ->with('category')
             ->orderBy('id', 'desc')
-            ->where('name', 'like', '%'.$search . '%')
+//            ->where('name', 'like', '%'.$search . '%')
             ->paginate(8)
             ->withQueryString();
 
